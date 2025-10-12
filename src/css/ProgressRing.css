@@ -1,0 +1,14 @@
+.progressRing-container .ring{
+    border: 10px solid;
+    border-radius: 50%;
+}
+
+.progressRing-container .carbRing {
+
+    height: 200px;
+    width:  200px;
+}
+
+.progressRing-container .fatRing {
+
+}

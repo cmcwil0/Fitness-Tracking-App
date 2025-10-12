@@ -1,24 +1,72 @@
-.navbar-container {
-    display: flex;
+/* main top bar */
+.navbar {
+  background: #111317;
+  border-bottom: 1px solid #2a2a2a;
+  padding: 12px 30px;       
 }
 
-
-.navlinks {
-    border: 1px solid;
-    display: flex;
-    list-style: none;
-    gap: 7%;
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
 }
 
-.navlinks a{
-    transition: all 0.15s ease;
+/* LINKS LEFT SIDE */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;                   
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 10px;           
 }
 
-.navlinks a:hover{
-    color: #7393B3;
+/* link appearance */
+.navbar-links a {
+  color: #eaeaea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
 }
 
+.navbar-links a:hover {
+  color: #ffffff;
+}
 
+.navbar-links a.active {
+  color: #ffffff;
+  border-bottom: 2px solid #ffffff;
+  padding-bottom: 2px;
+}
+
+/* Right Side (Login/Logout) */
+.navbar-auth {
+  margin-right: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Login Button */
 .login-button {
-    align-self: flex-end;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  background: transparent;
+  color: #fff;
+  padding: 6px 18px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.login-button:hover {
+  background-color: #fff;
+  color: #111317;
+}
+
+.login-button a {
+  color: inherit;
+  text-decoration: none;
 }

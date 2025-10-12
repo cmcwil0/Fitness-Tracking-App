@@ -1,0 +1,39 @@
+.dashboard-page {
+    padding: 30px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-container {
+    height: 90%;
+    width: 90%;
+    margin-bottom: 80px;
+    padding: 20px;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.dashboard-container .card {
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.dashboard-container .progress-container {
+    grid-row: span 2;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dashboard-container .nutrition-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

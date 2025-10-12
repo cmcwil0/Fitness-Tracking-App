@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: fitness_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: fitnessapp
+      MYSQL_USER: fitnessuser
+      MYSQL_PASSWORD: fitnesspass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d   # <-- runs .sql files on a brand-new DB
+
+  api:
+    build: ./server
+    container_name: fitness_api
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: fitnessuser
+      DB_PASSWORD: fitnesspass
+      DB_NAME: fitnessapp
+      JWT_SECRET: supersecret_change_me
+      NODE_ENV: development
+    depends_on:
+      - db
+    volumes:
+      - ./server:/app
+      - /app/node_modules                         # <-- prevents node_modules from being shadowed
+
+volumes:
+  db_data:

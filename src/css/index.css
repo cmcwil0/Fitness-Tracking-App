@@ -1,7 +1,9 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color: white;
-  background-color: #252526;
+
+  /* these are css variables that can be used across the whole document */
+  --primary-color: #F5F5F5;
+  --background-color: #252526; 
 
 }
 
@@ -15,9 +17,16 @@ a {
   color: inherit;
 }
 
+button {
+  color: inherit;
+}
+
 body {
+  color: var(--primary-color);
+  background-color: var(--background-color);
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 
