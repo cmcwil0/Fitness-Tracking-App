@@ -1,0 +1,45 @@
+.macro-search-container {
+
+}
+
+.macro-search-container .search-food {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+    
+}
+
+.macro-search-container .search-food input {
+    border-radius: 20px;
+    border: 1px solid var(--primary-color);
+    height: 40px;
+    width: 400px;
+    outline:none;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: all 0.15s ease;
+}
+
+.macro-search-container .search-food input::placeholder {
+    font-weight: bold;
+}
+
+.macro-search-container .search-food input:focus {
+    transform: scale(1.05);
+}
+
+.macro-search-container .foods-list {
+    list-style: none;
+}
+
+.macro-search-container .foods-list li {
+    border: 2px solid;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    width: 400px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}

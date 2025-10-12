@@ -14,4 +14,11 @@
     margin-bottom: 50px;
     border-radius: 20px;
     padding: 20px;
+    overflow: hidden;
 }
+
+.nutrition-page .calorie-count {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
