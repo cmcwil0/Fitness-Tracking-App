@@ -19,7 +19,7 @@
     justify-content: center;
 }
 
-.step1-container {
+.step1-container, .step2-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,7 +67,7 @@
     transform: scale(1.05);
 }
 
-.step1-container .next-button {
+.goal-form button {
     color: var(--primary-color);
     height: 50px;
     width: 120px;
@@ -76,12 +76,21 @@
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.6);
     transition: all 0.15s ease;
-    margin-top: 50px;
+    margin: 10px;
 }
 
-.step1-container .next-button:hover {
+.goal-form button:hover {
     transform: scale(1.05);
     cursor: pointer;
 }
 
+.goal-form .next-button {
+    margin-top: 50px;
+}
 
+.goal-form .button-selected {
+    transform: scale(1.05);
+    border-color: green;
+    color: green;
+    background-color: rgba(240, 248, 255, 0.712);
+}
