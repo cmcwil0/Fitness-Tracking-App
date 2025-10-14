@@ -6,6 +6,7 @@ import Nutrition from './pages/Nutrition'
 import Workouts from './pages/Workouts'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import GoalForm from './pages/GoalForm'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/workouts" element={<Workouts />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/dashboard" element={<Dashboard />}/>
+        <Route path="/goalform" element={<GoalForm />}/>
       </Routes>
       </BrowserRouter>
     </>

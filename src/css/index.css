@@ -11,6 +11,13 @@
   box-sizing: border-box;
 }
 
+/* removes arrows on input type number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* gets rid of purple color and underlining on links */
 a {
   text-decoration: none; 

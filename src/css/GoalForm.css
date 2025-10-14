@@ -1,0 +1,87 @@
+.goal-form-container {
+    padding: 20px;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.goal-form {
+    border: 2px solid;
+    height: 800px;
+    width: 700px;
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.step1-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.goal-form input {
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    height: 30px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: all 0.15s ease;
+    color: var(--primary-color);
+} 
+
+.step1-container input::placeholder {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.step1-container input:focus {
+    outline: none;
+    caret-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.height-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.goal-form select {
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: all 0.15s ease;
+}
+
+.goal-form select:focus {
+    color: var(--background-color);
+    transform: scale(1.05);
+}
+
+.step1-container .next-button {
+    color: var(--primary-color);
+    height: 50px;
+    width: 120px;
+    font-weight: bold;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: all 0.15s ease;
+    margin-top: 50px;
+}
+
+.step1-container .next-button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+
