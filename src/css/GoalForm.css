@@ -37,7 +37,7 @@
     transform: scale(1.3);
 }
 
-.goal-form .step1-container, .goal-form .step2-container, .goal-form .step3-container {
+.goal-form .step1-container, .goal-form .step2-container, .goal-form .step3-container, .goal-form .step4-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,10 +59,16 @@
 
 .goal-form .step1-container input{
     border: 2.5px solid var(--primary-color);
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: transparent;
     border-radius: 10px;
-    height: 30px;
+    height: 40px;
     text-align: center;
+    color: var(--primary-color);
+}
+
+.goal-form .step1-container input::placeholder {
+    color: var(--primary-color);
+    opacity: 88%;
 }
 
 .goal-form .step1-container label {
@@ -88,36 +94,40 @@
     transition: all 0.15s ease;
 }
 
-.goal-form .step1-container .gender-container button:hover {
+.goal-form .step1-container .gender-container button:hover, .goal-form .step2-container .exercise-type-buttons button:hover {
     background: var(--primary-color);
 }
 
-.goal-form .step1-container .gender-container button:hover svg {
+.goal-form .step1-container .gender-container button:hover svg, .goal-form .step2-container .exercise-type-buttons button:hover svg{
     fill: var(--background-color);
 }
 
-.goal-form .next-button {
+.goal-form .next-button, .goal-form .back-button {
     border: 2.5px solid var(--primary-color);
     background: var(--background-color);
     width: 100px;
     height: 40px;
     cursor: pointer;
+    transition: all 0.15s ease;
 }
 
-.goal-form .back-button {
-    border: 2.5px solid var(--primary-color);
-    background: var(--background-color);
-    width: 100px;
-    height: 40px;
-    cursor: pointer;
+
+.goal-form .next-button:hover, .goal-form .back-button:hover {
+    background: var(--primary-color);
+    color: var(--background-color);
+}
+
+.goal-form .step-buttons {
+    display: flex;
+    gap: 20px;
 }
 
 /* when gender button is selected */
-.goal-form .step1-container .gender-container .gender-selected {
-    background: var(--primary-color);
+.goal-form .button-selected {
+    background: var(--primary-color) !important;
     transform: scale(1.05);
 }
-.goal-form .step1-container .gender-container .gender-selected svg{
+.goal-form .button-selected svg{
     fill: var(--background-color);
 }
 
@@ -126,12 +136,81 @@
 .goal-form .step2-container .exercise-type-container, .goal-form .step2-container .activity-level-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     align-items: center;
 }
 
-.goal-form .step2-container .excercise-type-buttons {
+.goal-form .step2-container .exercise-type-buttons {
     display: flex;
     gap: 20px;
 }
+
+.goal-form .step2-container .cardio-button svg {
+    transform: scale(1.5) translateX(4px);
+    width: 32px; 
+    height: 32px;
+}
+
+.goal-form .step2-container .exercise-type-buttons .button-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.goal-form .step2-container .exercise-type-buttons label {
+    text-align: center;
+    color: transparent;
+    transition: all 0.15s ease;
+    font-size: 0.9rem;
+    opacity: 85%;
+}
+
+.goal-form .step2-container .exercise-type-buttons .lifting-button:hover + .lifting-label {
+    color: var(--primary-color);
+}
+
+.goal-form .step2-container .exercise-type-buttons .cardio-button:hover + .cardio-label {
+    color: var(--primary-color);
+}
+
+.goal-form .step2-container .activity-level-container select {
+    height: 30px;
+    border: 2.5px solid var(--primary-color);
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+.goal-form .step2-container .activity-level-container select option {
+    color: var(--background-color);
+}
+
+.goal-form .step3-container .training-type-container,
+.goal-form .step3-container .nutrition-style-container{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.goal-form .step3-container .button1-style {
+    border: 2.5px solid var(--primary-color);
+    background: transparent;
+    height: 50px;
+    min-width: 100px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.goal-form .step3-container .button1-style:hover {
+    background: var(--primary-color);
+    color: var(--background-color);
+}
+
+.goal-form .step3-container .button1-selected {
+    background: var(--primary-color);
+    color: var(--background-color);
+    transform: scale(1.05);
+}
+
+
+
 
