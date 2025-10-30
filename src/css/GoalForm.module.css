@@ -19,6 +19,13 @@
     align-items: center;
 }
 
+.navigationButtons {
+    display: flex;
+    gap: 50px;
+    margin-top: auto;
+    margin-bottom: 25px;
+}
+
 .navigationButtons button{
     border: 2px solid var(--primary-color);
     background: transparent;
@@ -33,6 +40,63 @@
     background-color: var(--primary-color);
     color: var(--background-color);
 }
+
+/* styles for gender and exercise type buttons */
+.buttonSvgStyle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttonSvgStyle button{
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.buttonSvgStyle svg {
+    fill: var(--primary-color);
+}
+
+.buttonSvgStyle button:hover svg{
+    fill: var(--background-color);
+}
+
+.buttonSvgStyle button:hover {
+    background: var(--primary-color);
+}
+
+.buttonSvgStyle label {
+    text-align: center;
+    opacity: 0%;
+    user-select: none;
+    font-size: 0.8rem;
+    transition: all 0.15s ease;
+}
+
+.buttonSvgStyle button:hover + label {
+    opacity: 80%;
+}
+
+.buttonSvgStyle .buttonSelected {
+    background: var(--primary-color);
+}
+
+.buttonSvgStyle .buttonSelected svg {
+    fill: var(--background-color);
+}
+
+.goalForm h2 {
+    text-align: center;
+}
+
 
 /* step 1 */
 
@@ -53,30 +117,13 @@
     outline: none;
 }
 
+.heightForm input {
+    max-width: 200px;
+}
+
 .genderForm {
     display: flex;
     gap: 20px;
-}
-
-.genderForm button{
-    width: 50px;
-    height: 50px;
-    background: transparent;
-    border: 2px solid var(--primary-color);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-}
-
-.genderForm button svg {
-    transform: all 0.15s ease;
-}
-
-.genderForm button:hover svg {
-    fill: var(--primary-color);
 }
 
 .maleButton svg {
@@ -92,8 +139,48 @@
     border-radius: 10px;
 }
 
+.exerciseTypeForm {
+    display: flex;
+    gap: 20px;
+}
+
 /* step 2 */
 
+.step2 {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+}
 
+.nutritionTypeForm, .trainingTypeForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.nutritionTypeForm div, .trainingTypeForm div{
+    display: flex;
+    gap: 15px;
+}
+
+.nutritionTypeForm button, .trainingTypeForm button{
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.nutritionTypeForm button:hover, .trainingTypeForm button:hover, .step2 .buttonSelected{
+    background: var(--primary-color);
+    color: var(--background-color);
+}
+
+
+/* step 3 */
 
 

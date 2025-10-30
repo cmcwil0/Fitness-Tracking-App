@@ -1,36 +1,36 @@
-.dashboard-page {
-    padding: 30px;
+.dashboardPage {
     height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.dashboard-container {
-    height: 90%;
-    width: 90%;
-    margin-bottom: 80px;
+.dashboardContainer {
+    height: 80%;
+    width: 85%;
     padding: 20px;
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 1fr);
+    margin-top: 50px;
 }
 
-.dashboard-container .card {
+.dashboardContainer .card {
     border: 1px solid;
     border-radius: 20px;
     padding: 20px;
 }
 
-.dashboard-container .progress-container {
+.dashboardContainer .progressContainer {
     grid-row: span 2;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.dashboard-container .nutrition-container {
+.dashboardContainer .nutritionContainer {
     display: flex;
     justify-content: center;
     align-items: center;

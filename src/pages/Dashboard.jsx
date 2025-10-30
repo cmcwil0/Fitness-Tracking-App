@@ -1,4 +1,4 @@
-import '../css/Dashboard.css'
+import classes from'../css/Dashboard.module.css'
 import ProgressRing from '../components/ProgressRing'
 import { useEffect, useState } from 'react'
 
@@ -35,19 +35,19 @@ const Dashboard = () => {
   }, [])
 
   return (
-    <div className="dashboard-page">
-      <div className="dashboard-container">
-        <div className='nutrition-container card'>
+    <div className={`${classes.dashboardPage} ${classes.card}`}>
+      <div className={`${classes.dashboardContainer} ${classes.card}`}>
+        <div className={`${classes.calorieContainer} ${classes.card}`}>
           <div>calories: </div>
         </div>
-        <div className="progress-container card">
+        <div className={`${classes.progressContainer} ${classes.card}`}>
           {/* pull from database for name below and similar data */}
           <h1>Welcome Back {username}</h1>
           <h2>Streak {streak}</h2>
         </div>
-        <div className='workout-container card'>workouts</div>
-        <div className='card'>graph</div>
-        <div className='card'>another</div>
+        <div className={`${classes.workoutContainerCard} ${classes.card}`}>workouts</div>
+        <div className={`${classes.card}`}>graph</div>
+        <div className={`${classes.card}`}>another</div>
       </div>
     </div>
   )

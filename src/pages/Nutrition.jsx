@@ -8,7 +8,7 @@ import MacroSearch from '../components/MacroSearch';
 
 const Nutrition = () => {
   return (
-    <div className="nutrition-page">
+    <div className={"nutrition-page"}>
       <div className="nutrition-container">
         <div>Calories</div>
 
