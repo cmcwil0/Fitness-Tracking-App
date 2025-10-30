@@ -1,0 +1,99 @@
+
+/* global styles */
+.goalFormContainer {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.goalForm {
+    width: 40%;
+    height: 70%;
+    border: 3px solid var(--primary-color);
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigationButtons button{
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.navigationButtons button:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+/* step 1 */
+
+.step1 .goalInputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.step1 .goalInputs input {
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 10px;
+    background: transparent;
+    color: var(--primary-color);
+    outline: none;
+}
+
+.genderForm {
+    display: flex;
+    gap: 20px;
+}
+
+.genderForm button{
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.genderForm button svg {
+    transform: all 0.15s ease;
+}
+
+.genderForm button:hover svg {
+    fill: var(--primary-color);
+}
+
+.maleButton svg {
+    transform: scale(0.8);
+}
+
+.otherButton svg {
+    transform: scale(0.8);
+}
+
+.activityForm select {
+    padding: 7px;
+    border-radius: 10px;
+}
+
+/* step 2 */
+
+
+
+

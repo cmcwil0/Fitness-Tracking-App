@@ -29,31 +29,33 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-inner">
-        {/* LEFT: keep these exactly as your original links */}
-        <ul className="navbar-links">
-          <li><NavLink to="/" end>Home</NavLink></li>
-          <li><NavLink to="/dashboard">Dashboard</NavLink></li>
-          <li><NavLink to="/nutrition">Nutrition</NavLink></li>
-          <li><NavLink to="/workouts">Workouts</NavLink></li>
-        </ul>
+      <nav className="navbar">
+        <div className="navbar-inner">
+          {/* LEFT: keep these exactly as your original links */}
+          <ul className="navbar-links">
+            <li><NavLink to="/" end>Home</NavLink></li>
+            <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+            <li><NavLink to="/nutrition">Nutrition</NavLink></li>
+            <li><NavLink to="/workouts">Workouts</NavLink></li>
+            <li><NavLink to="/goalform">GoalForm</NavLink></li>
+            <li><NavLink to="/signup">Signup</NavLink></li>
+          </ul>
 
-        {/* RIGHT: username (if logged in) + toggle button */}
-        <div className="navbar-auth">
-          {isLoggedIn && currentUser?.username && (
-            <span className="nav-username" style={{ marginRight: 12 }}>
-              {currentUser.username}
-            </span>
-          )}
-          {isLoggedIn ? (
-            <button className="login-button" onClick={handleLogout}>Log Out</button>
-          ) : (
-            <Link to="/login" className="login-button">Log In</Link>
-          )}
+          {/* RIGHT: username (if logged in) + toggle button */}
+          <div className="navbar-auth">
+            {isLoggedIn && currentUser?.username && (
+              <span className="nav-username" style={{ marginRight: 12 }}>
+                {currentUser.username}
+              </span>
+            )}
+            {isLoggedIn ? (
+              <button className="login-button" onClick={handleLogout}>Log Out</button>
+            ) : (
+              <Link to="/login" className="login-button">Log In</Link>
+            )}
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
   );
 };
 

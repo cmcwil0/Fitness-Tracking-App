@@ -7,6 +7,7 @@ import Workouts from './pages/Workouts'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import GoalForm from './pages/GoalForm'
+import SignUpForm from './pages/SignUpForm'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />}/>
         <Route path="/dashboard" element={<Dashboard />}/>
         <Route path="/goalform" element={<GoalForm />}/>
+        <Route path="/signup" element={<SignUpForm />}/>
       </Routes>
       </BrowserRouter>
     </>
