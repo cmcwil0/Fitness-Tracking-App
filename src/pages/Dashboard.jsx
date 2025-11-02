@@ -1,5 +1,4 @@
 import classes from'../css/Dashboard.module.css'
-import ProgressRing from '../components/ProgressRing'
 import { useEffect, useState } from 'react'
 
 const Dashboard = () => {

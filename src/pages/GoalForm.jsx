@@ -86,7 +86,6 @@ const GoalForm = () => {
             }
             {exerciseType === 'cardio' &&
                 <>
-                    
                     <div className={`${classes.trainingTypeForm}`}>
                         <label htmlFor="">Training For...</label>
                         <div>
@@ -119,7 +118,6 @@ const GoalForm = () => {
             <div>Training Type: {trainingType}</div>
             <div>Nutrition Type: {nutritionType}</div>
         </div>
-
       }
             <div className={`${classes.navigationButtons}`}>
                 {currentStep > 1 && <button onClick={() => setCurrentStep(prev => prev - 1)}>Back</button>}
