@@ -41,6 +41,12 @@
     color: var(--background-color);
 }
 
+.navigationButtons .buttonDisabled {
+    opacity: 50%;
+    cursor: none;
+    pointer-events: none;
+}
+
 /* styles for gender and exercise type buttons */
 .buttonSvgStyle {
     display: flex;

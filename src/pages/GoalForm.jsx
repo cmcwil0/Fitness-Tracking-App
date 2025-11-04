@@ -8,17 +8,47 @@ const GoalForm = () => {
     const [height, setHeight] = useState(''); //cm
     const [weight, setWeight] = useState(''); //lbs
     const [gender, setGender] = useState(''); //male, female, other
-    const [activityLevel, setActivityLevel] = useState(''); 
+    const [age, setAge] = useState(''); // age in years
+    const [activityLevel, setActivityLevel] = useState(''); //inactive, light, moderate, very, heavy
     const [exerciseType, setExerciseType] = useState(''); //lifting, cardio
     const [trainingType, setTrainingType] = useState(''); //Cardio: general, speed, endurance | Lifting: Strength, hypertrophy
     const [nutritionType, setNutritionType] = useState(''); //gain, maintain, lose
+    const [trainingSpeed, setTrainingSpeed] = useState('');
 
     const getResults = () => {
         // const totalHeightInches = Number(heightFt * 12) + Number(heightIn);
     }
 
+  
+    const validateForm = () => { //returns true/false if form has been completed
+        if(currentStep === 1) {
+            if(gender !== '' && weight !== '' && height !== '' && activityLevel !== '' && exerciseType !== '') {
+                return true;
+            } else {
+                return false;
+            }
+        } else if(currentStep === 2) {
+            if(trainingType !== '' && nutritionType !== '') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 
-   
+    const validateStep = (button) => {
+        if(button === "back") {
+            setCurrentStep(currentStep - 1);
+        } else if(button === "next" && validateForm()) {
+            setCurrentStep(currentStep + 1);
+        } else {
+            return;
+        }
+    }
+
+    const submitForm = () => {
+
+    }
 
   return (
     <div className={`${classes.goalFormContainer}`}>
@@ -42,6 +72,9 @@ const GoalForm = () => {
                         <label>Other</label>
                     </div>
               </div>
+              <div className={`${classes.ageForm}`}>
+                <input type="number" placeholder='Age (years)' className={`${classes.ageInput}`} value={age} onChange={e => setAge(e.target.value)} />
+              </div>
               <div className={`${classes.heightForm}`}>
                       <input className={`${classes.heightInput}`} type="number" placeholder='Height (cm)' value={height} onChange={e => setHeight(e.target.value)}/>
               </div>
@@ -49,11 +82,12 @@ const GoalForm = () => {
                   <input type="number" placeholder='Weight (lbs)' value={weight} onChange={e => setWeight(e.target.value)}/>
               </div>
               <div className={`${classes.activityForm}`}>
-                  <select>
+                  <select value={activityLevel} onChange={e => setActivityLevel(e.target.value)}>
                       <option value="" disabled hidden>Select</option>
                       <option value="inactive">Inactive</option>
                       <option value="light">Lightly Active</option>
                       <option value="moderate">Moderately Active</option>
+                      <option value="very">Very Active</option>
                       <option value="heavy">Heavily Active</option>
                   </select>
               </div>
@@ -99,9 +133,11 @@ const GoalForm = () => {
             <div className={`${classes.nutritionTypeForm}`}>
                 <label>I want to...</label>
                 <div>
+                    <button onClick={() => setNutritionType('gainFast')} className={`${nutritionType === 'gainFast' ? classes.buttonSelected : ''}`}>{exerciseType === 'lifting' ? 'Bulk Quickly' : 'Gain Weight Fast'}</button>
                     <button onClick={() => setNutritionType('gain')} className={`${nutritionType === 'gain' ? classes.buttonSelected : ''}`}>{exerciseType === 'lifting' ? 'Bulk' : 'Gain Weight'}</button>
-                    <button onClick={() => setNutritionType('maintain')} className={`${nutritionType === 'maintain' ? classes.buttonSelected : ''}`}>Maintain</button> 
+                    <button onClick={() => setNutritionType('maintain')} className={`${nutritionType === 'maintain' ? classes.buttonSelected : ''}`}>Maintain</button>
                     <button onClick={() => setNutritionType('lose')} className={`${nutritionType === 'lose' ? classes.buttonSelected : ''}`}>{exerciseType === 'lifting' ? 'Cut' : 'Lose Weight'}</button>
+                    <button onClick={() => setNutritionType('loseFast')} className={`${nutritionType === 'loseFast' ? classes.buttonSelected : ''}`}>{exerciseType === 'lifting' ? 'Cut Quickly' : 'Lose Weight Fast'}</button> 
                 </div>
             </div>
 
@@ -120,8 +156,8 @@ const GoalForm = () => {
         </div>
       }
             <div className={`${classes.navigationButtons}`}>
-                {currentStep > 1 && <button onClick={() => setCurrentStep(prev => prev - 1)}>Back</button>}
-                {currentStep < 3 && <button onClick={() => setCurrentStep(prev => prev + 1)}>Next</button>} 
+                {currentStep > 1 && <button onClick={() => validateStep('back')}>Back</button>}
+                {currentStep < 3 && <button onClick={() => validateStep('next')} className={!validateForm() ? classes.buttonDisabled : ''} >Next</button>} 
                 {currentStep === 3 && <button>Submit</button>}
             </div>
         </div>
