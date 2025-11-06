@@ -17,7 +17,7 @@ const foods = [ //example list *WILL BE REPLACED BY NUTRITIONIX*
 
 
 
-const MacroSearch = ({onFocus, onBlur}) => {
+const MacroSearch = ({onFocus, onBlur, onAddFood}) => {
     const [search, setSearch] = useState('');
 
     const filteredFoods = foods.filter(item =>
@@ -47,7 +47,18 @@ const MacroSearch = ({onFocus, onBlur}) => {
                 <div className={classes.subInfo}>
                   <span className={classes.itemCalories}>{item.calories}<span>kcal</span></span>
                   <button className={classes.infoButton} type="button">?</button>
-                  <button className={classes.addFoodButton} type="button">+</button>
+                  <button
+                    className={classes.addFoodButton}
+                    type="button"
+                    onMouseDown={(event) => {
+                      event.preventDefault();
+                      if (onAddFood) {
+                        onAddFood(item);
+                      }
+                    }}
+                  >
+                    +
+                  </button>
                 </div>
               </li>
             ))}
