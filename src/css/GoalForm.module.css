@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
 }
 
 .navigationButtons {
@@ -188,5 +189,110 @@
 
 
 /* step 3 */
+
+.step3 {
+    
+}
+
+.step3 .editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+}
+
+.editForm .block {
+    display: flex;
+    gap: 10px;
+}
+
+.editForm button {
+    margin-left: auto;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.editForm button:hover {
+    background: var(--primary-color);
+    color: var(--background-color);
+}
+
+.editForm input {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    height: fit-content;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+/* step 4 */
+
+.step4 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.nutritionRecContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.nutritionRecContainer label{
+    font-size: large;
+    font-weight: bold;
+}
+
+.nutritionRecContainer .recDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.nutritionRecContainer .nutritionRec span{
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.nutritionRec div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.nutritionRecContainer div button {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.nutritionRecContainer div button:hover {
+    color: var(--background-color);
+    background: var(--primary-color);
+}
+
+.nutritionRec input {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 10px;
+    padding: 5px;
+    outline: none;
+}
 
 

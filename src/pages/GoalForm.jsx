@@ -1,5 +1,8 @@
 import { act, useState } from 'react';
 import classes from '../css/GoalForm.module.css';
+import { NutritionRecommendation } from '../components/UserRecommendation';
+
+const capitalizeFirstLetter = () => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 
 const GoalForm = () => {
     const [currentStep, setCurrentStep] = useState(1); //conditional rendering for each step
@@ -12,11 +15,26 @@ const GoalForm = () => {
     const [activityLevel, setActivityLevel] = useState(''); //inactive, light, moderate, very, heavy
     const [exerciseType, setExerciseType] = useState(''); //lifting, cardio
     const [trainingType, setTrainingType] = useState(''); //Cardio: general, speed, endurance | Lifting: Strength, hypertrophy
-    const [nutritionType, setNutritionType] = useState(''); //gain, maintain, lose
-    const [trainingSpeed, setTrainingSpeed] = useState('');
+    const [nutritionType, setNutritionType] = useState(''); //gain, gainFast, maintain, lose, loseFast
+    const [editingField, setEditingField] = useState('');
+    
+    const [calorieTarget, setCalorieTarget] = useState('');
+    
 
-    const getResults = () => {
-        // const totalHeightInches = Number(heightFt * 12) + Number(heightIn);
+    const editingFields = [
+        {id:'height', label: 'Height'},
+        {id:'weight', label: 'Weight'},
+        {id:'gender', label: 'Gender'},
+        {id:'age', label: 'Age'},
+        {id:'exerciseType', label: 'Exercise Type'},
+        {id:'trainingType', label: 'Training Type'},
+        {id:'nutritionType', label: 'Nutrition Type'},
+    ]
+
+
+    const Submit = () => {
+        setCurrentStep(currentStep + 1);
+        setCalorieTarget(Math.round(NutritionRecommendation(height, weight, gender, age, activityLevel, nutritionType)));
     }
 
   
@@ -146,20 +164,66 @@ const GoalForm = () => {
       {currentStep === 3 && //step 3 GOAL RECCOMENDATION
         <div className={`${classes.step3}`}>
             <h2>Does Everything Look Correct?</h2>
-            <div>Height: {height}cm</div>
-            <div>Weight: {weight}lbs</div>
-            <div>Gender: {gender}</div>
-            <div>Activity Level: {activityLevel}</div>
-            <div>Exercise Type: {exerciseType}</div>
-            <div>Training Type: {trainingType}</div>
-            <div>Nutrition Type: {nutritionType}</div>
+            <div className={classes.editForm}>
+                {editingFields.map((object, index) => (
+                    <div className={`${classes.block} ${classes[`${object.id}Container`]}`} key={index}>
+                        <label>{object.label}: </label>
+                        {editingField !== object.id ? ( //renders input if editing
+                            <>
+                                <span>{eval(object.id)}</span>
+                                <button className={classes.editingButton} onClick={() => setEditingField(object.id)}>Edit</button>
+                            </>
+                        ) : (
+                            <>
+                                <input onChange={e => eval(`set${object.id.charAt(0).toUpperCase() + object.id.slice(1)}`)(e.target.value)} value={eval(object.id)} placeholder={`${object.label}...`} />
+                                <button className={classes.confirmEditButton} onClick={() => setEditingField('')}>Confirm</button>
+                            </>
+                        )}
+                        {}
+                    </div>
+                ))
+
+                }
+            </div>
         </div>
       }
-            <div className={`${classes.navigationButtons}`}>
+      {currentStep !== 4 && //displays next/back buttons on all steps except 4
+        <div className={`${classes.navigationButtons}`}>
                 {currentStep > 1 && <button onClick={() => validateStep('back')}>Back</button>}
                 {currentStep < 3 && <button onClick={() => validateStep('next')} className={!validateForm() ? classes.buttonDisabled : ''} >Next</button>} 
-                {currentStep === 3 && <button>Submit</button>}
+                {currentStep === 3 && <button onClick={() => Submit()}>Submit</button>}
             </div>
+      }
+{/* Going to add loading transition */}
+      {currentStep === 4 && //step 4 GOAL RECOMMENDATION
+        <div className={classes.step4}>
+            <h2>Goal Recommendation</h2>
+            <div className={classes.nutritionRecContainer}>
+                <label>Daily Calorie Target</label>
+                <div className={classes.recDiv}>
+                    <div className={classes.nutritionRec}>
+                        {editingField !== 'calorieTarget' ? (
+                            <div>
+                                <span>{calorieTarget}</span> kcal
+                                <button className={classes.editbutton} onClick={() => setEditingField('calorieTarget')}>Edit</button>
+                            </div>
+                        ) : (
+                            <div>
+                                <input type="number" placeholder='kcal...' onChange={e => setCalorieTarget(e.target.value)} value={calorieTarget}/> kcal
+                                <button className={classes.confirmEditButton} onClick={() => setEditingField('')}>Confirm</button>
+                            </div>
+                        )}
+                    </div>
+                    
+                </div>
+            </div>
+            <div className={classes.workoutRecContainer}>
+                <label>Weekly Workout Target</label>
+                <span className={classes.workoutRec}></span>
+            </div>
+        </div>
+      }
+            
         </div>
       </div>
     )
