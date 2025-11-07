@@ -21,6 +21,7 @@ services:
     ports:
       - "4000:4000"
     environment:
+      API_NINJAS_KEY: ${API_NINJAS_KEY}
       DB_HOST: db
       DB_PORT: 3306
       DB_USER: fitnessuser

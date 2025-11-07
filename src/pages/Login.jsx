@@ -26,7 +26,8 @@ const Login = () => {
     if (!username || !password) return alert('Enter username and password.')
 
     try {
-      const { token, user } = await request('login', { username, password })
+      // send as `identifier` so it works with username OR email
+      const { token, user } = await request('login', { identifier: username, password })
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
       navigate('/dashboard')
@@ -35,19 +36,9 @@ const Login = () => {
     }
   }
 
-  const handleSignUp = async () => {
-    const username = usernameInputRef.current.value.trim()
-    const password = passwordInputRef.current.value
-    if (password.length < 6) return alert('Password must be at least 6 characters.')
-
-    try {
-      const { token, user } = await request('register', { username, password })
-      localStorage.setItem('token', token)
-      localStorage.setItem('user', JSON.stringify(user))
-      navigate('/dashboard')
-    } catch (err) {
-      alert(err.message)
-    }
+  // just redirect to the real Sign Up page
+  const handleSignUp = () => {
+    navigate('/signup')
   }
 
   return (
