@@ -11,3 +11,15 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 DESCRIBE users;
+
+CREATE TABLE IF NOT EXISTS goals (
+  user_id INT PRIMARY KEY,
+  calorie_target INT NOT NULL,
+  protein_target INT NULL,
+  carbs_target   INT NULL,
+  fat_target     INT NULL,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_goals_user
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+);
