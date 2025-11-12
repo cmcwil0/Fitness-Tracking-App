@@ -3,7 +3,28 @@ import classes from '../css/Nutrition.module.css';
 import MacroSearch from '../components/MacroSearch';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import MacroProgressCard from '../components/MacroProgressCard';
+import WeeklyGraph from '../components/WeeklyGraph';
 import { isLoggedIn, authHeaders } from '../utils/auth.js';
+
+
+export const NutritionCard = () => {
+    return (
+      <div className={classes.nutritionCard}>
+        <CircularProgressbar
+                className={classes.progressBar} 
+                value={1000}
+                maxValue={3000}  
+                text={`${1000}`}
+                styles={buildStyles({
+                  // pathColor: ``,
+                })}
+                 />
+        <MacroProgressCard />
+      </div>
+    )
+  }
+
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
@@ -72,32 +93,21 @@ const Nutrition = () => {
                 <label>Fat</label>
               </div>
             </div>
-          </>
-        }
-
-        <MacroSearch
-          onFocus={() => setIsSearchFocused(true)}
-          onBlur={() => setIsSearchFocused(false)}
-          onAddFood={handleAddFood}
-        />
-
-        {isSearchFocused === false &&
-          <>
-            <div className={classes.weeklyChartContainer}>
-              <div className={classes.weeklyChart}>
-                {daysOfWeek.map((day, i) => (
-                  <div className={`${classes[`${day}Container`]} ${classes.barContainer}`} key={i}>
-                    <div
-                      className={`${classes[`${day}Bar`]} ${classes.bar}`}
-                      style={{ height: `${Math.min(100, (calorieCount / calorieTarget) * 100)}%` }}
-                    />
-                    <label>{day}</label>
-                  </div>
-                ))}
-              </div>
+                </> }
+            <MacroSearch onFocus={() => setIsSearchFocused(true)} onBlur={() => setIsSearchFocused(false)} onAddFood={handleAddFood} />
+            <div className={classes.bottomContent}>
+              {isSearchFocused === false &&
+                <>
+                  <WeeklyGraph />
+                </>
+              }
+              {isSearchFocused === true && 
+                <div className={classes.searchContainer}>
+                </div>
+              }
             </div>
-          </>
-        }
+         
+
       </div>
     </div>
   );
