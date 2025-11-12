@@ -3,10 +3,27 @@ import classes from '../css/Nutrition.module.css'
 import MacroSearch from '../components/MacroSearch';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import MacroProgressCard from '../components/MacroProgressCard';
+import WeeklyGraph from '../components/WeeklyGraph';
 
-const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
 
+export const NutritionCard = () => {
+    return (
+      <div className={classes.nutritionCard}>
+        <CircularProgressbar
+                className={classes.progressBar} 
+                value={1000}
+                maxValue={3000}  
+                text={`${1000}`}
+                styles={buildStyles({
+                  // pathColor: ``,
+                })}
+                 />
+        <MacroProgressCard />
+      </div>
+    )
+  }
 
 const Nutrition = () => {
   const [calorieCount, setCalorieCount] = useState(1800);
@@ -53,25 +70,17 @@ const Nutrition = () => {
             </div>
                 </> }
             <MacroSearch onFocus={() => setIsSearchFocused(true)} onBlur={() => setIsSearchFocused(false)} />
-          {isSearchFocused === false &&
-            <>
-              <div className={classes.weeklyChartContainer}>
-                  <div className={classes.weeklyChart}>
-                    {daysOfWeek.map((element, index) => ( //renders for each day of the week
-                    <div className={`${classes[`${element}Container`]} ${classes.barContainer}`}  key={index}> 
-                      <div className={`${classes[`${element}Bar`]} ${classes.bar}`} style={{height: `${(calorieCount / calorieTarget) * 100}%`}}></div>
-                      <label>{element}</label>
-                    </div>
-                    ))}
-                  </div>
-              </div>
-            </>
-          }
-          {isSearchFocused === true && 
-            <div className={classes.searchContainer}>
-              
+            <div className={classes.bottomContent}>
+              {isSearchFocused === false &&
+                <>
+                  <WeeklyGraph />
+                </>
+              }
+              {isSearchFocused === true && 
+                <div className={classes.searchContainer}>
+                </div>
+              }
             </div>
-          }
          
 
       </div>
