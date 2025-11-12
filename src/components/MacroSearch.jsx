@@ -15,7 +15,7 @@ const useDebounce = (value, delay = 400) => {
 const round = (n) => (typeof n === 'number' ? Math.round(n) : 0);
 const titleCase = (s = '') => s.charAt(0).toUpperCase() + s.slice(1);
 
-const MacroSearch = ({ onFocus, onBlur }) => {
+const MacroSearch = ({ onFocus, onBlur, onAddFood }) => {
   const [search, setSearch] = useState('');
   const [foods, setFoods] = useState([]);
   const [error, setError] = useState(null);
@@ -67,6 +67,7 @@ const MacroSearch = ({ onFocus, onBlur }) => {
           onBlur={onBlur}
         />
         {error && <div style={{ fontSize: 12, marginTop: 6 }}>{error}</div>}
+
         <ul className={classes.foodsList}>
           {search !== '' && filteredFoods.map(item => (
             <li key={item.id}>
@@ -74,10 +75,27 @@ const MacroSearch = ({ onFocus, onBlur }) => {
                 <span className={classes.itemName}>{item.name}</span>
                 <span className={classes.itemBrand}>{item.brand}</span>
               </div>
+
               <div className={classes.subInfo}>
-                <span className={classes.itemCalories}>{item.calories}<span>kcal</span></span>
-                <button className={classes.infoButton} type="button">?</button>
-                <button className={classes.addFoodButton} type="button">+</button>
+                <span className={classes.itemCalories}>
+                  {item.calories}<span>kcal</span>
+                </span>
+
+                <span style={{ fontSize: 12, opacity: 0.85, marginRight: 8 }}>
+                  {item.carbs}g C · {item.protein}g P · {item.fat}g F
+                </span>
+
+                <button
+                  className={classes.infoButton}
+                  type="button"
+                >?</button>
+
+                <button
+                  className={classes.addFoodButton}
+                  type="button"
+                  onMouseDown={e => e.preventDefault()} 
+                  onClick={() => onAddFood?.(item)}
+                >+</button>
               </div>
             </li>
           ))}
