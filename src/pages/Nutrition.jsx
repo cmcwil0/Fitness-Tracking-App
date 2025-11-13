@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import classes from '../css/Nutrition.module.css'
 import MacroSearch from '../components/MacroSearch';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -31,7 +31,7 @@ export const NutritionCard = () => {
   }
 
 const Nutrition = () => {
-  const [calorieTarget] = useState(2800);
+  const [calorieTarget, setCalorieTarget] = useState(2800);
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
@@ -66,7 +66,6 @@ const Nutrition = () => {
   };
 
 
-  const date = new Date();
 
   // Load the user's saved calorie target
   useEffect(() => {
@@ -82,14 +81,6 @@ const Nutrition = () => {
       } catch {}
     })();
   }, []);
-
-  // When user clicks “+” on a search result
-  const handleAddFood = (food) => {
-    setCalorieCount(v => v + (food.calories || 0));
-    setCarbCount(v => v + (food.carbs || 0));
-    setProteinCount(v => v + (food.protein || 0));
-    setFatCount(v => v + (food.fat || 0));
-  };
 
   return (
     <div className={`${classes.nutritionPage}`}>
@@ -170,6 +161,7 @@ const Nutrition = () => {
             <div className={classes.searchContainer}>
               
             </div>
+          }
          
 
       </div>
