@@ -8,10 +8,12 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import GoalForm from './pages/GoalForm';
 import SignUpForm from './pages/SignUpForm';
+import { ChatProvider, ChatWidget } from './chatbot';
 
 function App() {
   return (
-    <BrowserRouter>
+    <ChatProvider>
+      <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -23,7 +25,9 @@ function App() {
         <Route path="/goalform" element={<GoalForm />} />
         <Route path="/signup" element={<SignUpForm />} />
       </Routes>
-    </BrowserRouter>
+      <ChatWidget />
+      </BrowserRouter>
+    </ChatProvider>
   );
 }
 
