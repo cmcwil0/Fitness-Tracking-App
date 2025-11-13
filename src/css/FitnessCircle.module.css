@@ -1,0 +1,23 @@
+.fitnessCircleOuter {
+    width: 225px;
+    height: 225px;
+    position: relative;
+    background: var(--background-color);
+    border-radius: 50%;
+}
+
+.fitnessCircle {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    background: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
