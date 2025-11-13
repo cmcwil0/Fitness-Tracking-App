@@ -3,7 +3,7 @@ import './css/App.css';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Nutrition from './pages/Nutrition';
-import Workouts from './pages/Workouts';
+import Fitness from './pages/Fitness';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import GoalForm from './pages/GoalForm';
@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/nutrition" element={<Nutrition />} />
-        <Route path="/workouts" element={<Workouts />} />
+        <Route path="/fitness" element={<Fitness />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/goalform" element={<GoalForm />} />

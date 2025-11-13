@@ -36,7 +36,7 @@ const Navbar = () => {
             <li><NavLink to="/" end>Home</NavLink></li>
             <li><NavLink to="/dashboard">Dashboard</NavLink></li>
             <li><NavLink to="/nutrition">Nutrition</NavLink></li>
-            <li><NavLink to="/workouts">Workouts</NavLink></li>
+            <li><NavLink to="/fitness">Fitness</NavLink></li>
             <li><NavLink to="/goalform">GoalForm</NavLink></li>
             <li><NavLink to="/signup">Signup</NavLink></li>
           </ul>
