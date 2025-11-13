@@ -2,86 +2,73 @@ import { Router } from 'express';
 import pool from '../db.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { makeCandidateUsername } from '../utils/username.js';
 
 const router = Router();
-const makeToken = (payload) =>
+const sign = (payload) =>
   jwt.sign(payload, process.env.JWT_SECRET || 'devsecret', { expiresIn: '7d' });
 
+/** Register with { firstName, lastName, email, password } */
 router.post('/register', async (req, res) => {
   try {
-    const { username, password, email } = req.body;
-    if (!username || !password) {
-      return res.status(400).json({ message: 'username and password required' });
-    }
+    const { firstName = '', lastName = '', email = '', password = '' } = req.body || {};
+    if (!email || !password) return res.status(400).json({ message: 'email and password required' });
+    if (password.length < 6) return res.status(400).json({ message: 'password must be at least 6 characters long' });
 
-    const [exists] = await pool.query('SELECT id FROM users WHERE username = ?', [username]);
-    if (exists.length) return res.status(409).json({ message: 'username already exists' });
+    const [byEmail] = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
+    if (byEmail.length) return res.status(409).json({ message: 'email already registered' });
+
+    const baseList = makeCandidateUsername({ firstName, lastName, email });
+    let username = null;
+    for (const base of baseList) {
+      let candidate = base;
+      for (let n = 0; n <= 9999; n++) {
+        const [rows] = await pool.query('SELECT id FROM users WHERE username = ?', [candidate]);
+        if (!rows.length) { username = candidate; break; }
+        candidate = `${base}${n + 1}`;
+      }
+      if (username) break;
+    }
+    if (!username) username = `user${Date.now()}`;
 
     const hash = await bcrypt.hash(password, 12);
-    const [result] = await pool.query(
+    await pool.query(
       'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
-      [username, email || null, hash]
+      [username, email, hash]
     );
 
-    // read back the row to include role and email
-    const [rows] = await pool.query(
-      'SELECT id, username, email, role FROM users WHERE id = ?',
-      [result.insertId]
-    );
-    const user = rows[0];
-
-    const token = makeToken({ id: user.id, username: user.username, role: user.role });
-    res.status(201).json({ token, user });
+    return res.status(201).json({ ok: true, username });
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: 'server error' });
   }
 });
 
+/** Login with username OR email */
 router.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    if (!username || !password)
-      return res.status(400).json({ message: 'username and password required' });
+    const identifier = req.body.identifier ?? req.body.username ?? '';
+    const { password = '' } = req.body || {};
+    if (!identifier || !password) return res.status(400).json({ message: 'identifier and password required' });
 
-    const [rows] = await pool.query(
-      'SELECT id, username, email, role, password_hash FROM users WHERE username = ?',
-      [username]
-    );
+    const isEmail = identifier.includes('@');
+    const sql = isEmail
+      ? 'SELECT id, username, email, role, password_hash FROM users WHERE email = ?'
+      : 'SELECT id, username, email, role, password_hash FROM users WHERE username = ?';
+
+    const [rows] = await pool.query(sql, [identifier]);
     if (!rows.length) return res.status(401).json({ message: 'invalid credentials' });
 
     const user = rows[0];
     const ok = await bcrypt.compare(password, user.password_hash);
     if (!ok) return res.status(401).json({ message: 'invalid credentials' });
 
-    const token = makeToken({ id: user.id, username: user.username, role: user.role });
-    // strip password_hash before returning
-    const { password_hash, ...safeUser } = user;
-    res.json({ token, user: safeUser });
+    const token = sign({ id: user.id, username: user.username, role: user.role });
+    const { password_hash, ...safe } = user;
+    res.json({ token, user: safe });
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: 'server error' });
-  }
-});
-
-// helper: return current user from token
-router.get('/me', async (req, res) => {
-  try {
-    const auth = req.headers.authorization || '';
-    const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
-    if (!token) return res.status(401).json({ message: 'missing token' });
-
-    const payload = jwt.verify(token, process.env.JWT_SECRET || 'devsecret');
-
-    const [rows] = await pool.query(
-      'SELECT id, username, email, role, created_at FROM users WHERE id = ?',
-      [payload.id]
-    );
-    if (!rows.length) return res.status(404).json({ message: 'user not found' });
-
-    res.json({ user: rows[0] });
-  } catch (e) {
-    return res.status(401).json({ message: 'invalid or expired token' });
   }
 });
 

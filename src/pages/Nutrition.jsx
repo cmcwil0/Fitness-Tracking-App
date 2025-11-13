@@ -1,15 +1,37 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import classes from '../css/Nutrition.module.css'
 import MacroSearch from '../components/MacroSearch';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import MacroProgressCard from '../components/MacroProgressCard';
+import WeeklyGraph from '../components/WeeklyGraph';
+import { isLoggedIn, authHeaders } from '../utils/auth.js';
+import { getCurrentDate } from './Dashboard.jsx';
 
-const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 
 
+
+export const NutritionCard = () => {
+    return (
+      <div className={classes.nutritionCard}>
+        <CircularProgressbar
+                className={classes.progressBar} 
+                value={1000}
+                maxValue={3000}  
+                text={`${1000}`}
+                styles={buildStyles({
+                  // pathColor: ``,
+                })}
+                 />
+        <MacroProgressCard />
+      </div>
+    )
+  }
 
 const Nutrition = () => {
-  const [calorieTarget] = useState(2800);
+  const [calorieTarget, setCalorieTarget] = useState(2800);
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
@@ -44,7 +66,21 @@ const Nutrition = () => {
   };
 
 
-  const date = new Date();
+
+  // Load the user's saved calorie target
+  useEffect(() => {
+    if (!isLoggedIn()) return;
+    (async () => {
+      try {
+        const r = await fetch(`${API}/api/goals/me`, { headers: authHeaders() });
+        if (!r.ok) return;
+        const data = await r.json();
+        if (data && typeof data.calorie_target === 'number') {
+          setCalorieTarget(Number(data.calorie_target));
+        }
+      } catch {}
+    })();
+  }, []);
 
   return (
     <div className={`${classes.nutritionPage}`}>
@@ -52,10 +88,10 @@ const Nutrition = () => {
 
         {isSearchFocused === false &&
           <>
-            <div className={classes.dateLabel}>{date.toLocaleDateString()}</div>
+            <div className={classes.dateLabel}>{getCurrentDate()}</div>
 
             <div className={classes.progressBar}>
-              <CircularProgressbar 
+              <CircularProgressbar
                 value={calorieCount}
                 maxValue={calorieTarget}  
                 text={`${formatNumber(calorieCount)}`}
@@ -130,7 +166,7 @@ const Nutrition = () => {
 
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Nutrition
+export default Nutrition;

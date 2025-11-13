@@ -22,8 +22,8 @@
 }
 
 .home-page .start-button:hover {
-    background-color: var(--primary-color);
+    background-color: var(--accent-color);
     color: var(--background-color);
-    border: var(--primary-color);
+    border: var(--accent-color);
     transform: scale(1.05);
 }

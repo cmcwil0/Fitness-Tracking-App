@@ -1,0 +1,29 @@
+.macroProgressCard {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.macroProgressCard section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* progress bar */
+
+.progressBarContainer {
+    width: 70px;
+    height: 10px;
+    background-color: var(--accent-color);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.progressBar {
+    height: 100%;
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
