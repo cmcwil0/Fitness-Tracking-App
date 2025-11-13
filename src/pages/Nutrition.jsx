@@ -6,6 +6,11 @@ import 'react-circular-progressbar/dist/styles.css';
 import MacroProgressCard from '../components/MacroProgressCard';
 import WeeklyGraph from '../components/WeeklyGraph';
 import { isLoggedIn, authHeaders } from '../utils/auth.js';
+import { getCurrentDate } from './Dashboard.jsx';
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+
 
 
 export const NutritionCard = () => {
@@ -24,10 +29,6 @@ export const NutritionCard = () => {
       </div>
     )
   }
-
-
-const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
-const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 
 const Nutrition = () => {
   const [calorieCount, setCalorieCount] = useState(0);
@@ -68,7 +69,7 @@ const Nutrition = () => {
 
         {isSearchFocused === false &&
           <>
-            <div className={classes.dateLabel}>{date.toLocaleDateString()}</div>
+            <div className={classes.dateLabel}>{getCurrentDate()}</div>
 
             <div className={classes.progressBar}>
               <CircularProgressbar

@@ -11,7 +11,7 @@
 .goalForm {
     width: 40%;
     height: 70%;
-    border: 3px solid var(--primary-color);
+    border: 3px solid var(--accent-color);
     border-radius: 10px;
     margin-top: 20px;
     display: flex;
@@ -28,7 +28,7 @@
 }
 
 .navigationButtons button{
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--accent-color);
     background: transparent;
     border-radius: 10px;
     padding: 12px;
@@ -38,7 +38,7 @@
 }
 
 .navigationButtons button:hover {
-    background-color: var(--primary-color);
+    background-color: var(--accent-color);
     color: var(--background-color);
 }
 
@@ -56,7 +56,7 @@
 }
 
 .buttonSvgStyle button{
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--accent-color);
     background: transparent;
     min-width: 50px;
     min-height: 50px;
@@ -69,7 +69,7 @@
 }
 
 .buttonSvgStyle svg {
-    fill: var(--primary-color);
+    fill: var(--accent-color);
 }
 
 .buttonSvgStyle button:hover svg{
@@ -77,7 +77,7 @@
 }
 
 .buttonSvgStyle button:hover {
-    background: var(--primary-color);
+    background: var(--accent-color);
 }
 
 .buttonSvgStyle label {
@@ -93,7 +93,7 @@
 }
 
 .buttonSvgStyle .buttonSelected {
-    background: var(--primary-color);
+    background: var(--accent-color);
 }
 
 .buttonSvgStyle .buttonSelected svg {
@@ -116,11 +116,11 @@
 }
 
 .step1 .goalInputs input {
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--accent-color);
     border-radius: 10px;
     padding: 10px;
     background: transparent;
-    color: var(--primary-color);
+    color: var(--accent-color);
     outline: none;
 }
 
@@ -174,7 +174,7 @@
 }
 
 .nutritionTypeForm button, .trainingTypeForm button{
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--accent-color);
     background: transparent;
     padding: 10px;
     border-radius: 10px;
@@ -183,7 +183,7 @@
 }
 
 .nutritionTypeForm button:hover, .trainingTypeForm button:hover, .step2 .buttonSelected{
-    background: var(--primary-color);
+    background: var(--accent-color);
     color: var(--background-color);
 }
 
@@ -209,21 +209,21 @@
 .editForm button {
     margin-left: auto;
     background: transparent;
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--accent-color);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.15s ease;
 }
 
 .editForm button:hover {
-    background: var(--primary-color);
+    background: var(--accent-color);
     color: var(--background-color);
 }
 
 .editForm input {
     background: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
     height: fit-content;
     border-radius: 10px;
     padding-left: 10px;
@@ -275,7 +275,7 @@
 
 .nutritionRecContainer div button {
     background: transparent;
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--accent-color);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.15s ease;
@@ -283,13 +283,13 @@
 
 .nutritionRecContainer div button:hover {
     color: var(--background-color);
-    background: var(--primary-color);
+    background: var(--accent-color);
 }
 
 .nutritionRec input {
     background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
     border-radius: 10px;
     padding: 5px;
     outline: none;

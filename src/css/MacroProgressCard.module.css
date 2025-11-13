@@ -16,7 +16,7 @@
 .progressBarContainer {
     width: 70px;
     height: 10px;
-    background-color: var(--primary-color);
+    background-color: var(--accent-color);
     border-radius: 10px;
     overflow: hidden;
     margin-top: 5px;
