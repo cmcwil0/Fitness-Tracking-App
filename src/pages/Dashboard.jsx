@@ -2,6 +2,7 @@ import classes from'../css/Dashboard.module.css'
 import { useEffect, useState } from 'react'
 import {NutritionCard} from './Nutrition.jsx'
 import WeeklyGraph from '../components/WeeklyGraph.jsx'
+import { NavLink } from 'react-router-dom'
 
 export const getCurrentDate = () => {
   const today = new Date()
@@ -64,7 +65,7 @@ const Dashboard = () => {
               <h2>Welcome Back {username}</h2>
               <span className={classes.dateLabel}>{getCurrentDate()}</span>
             </div>
-            <div className={classes.profileContainer}></div>
+              <NavLink className={classes.profileContainer} to="/userprofile"></NavLink>
           </div>
 
           <div className={classes.bottomSection}>

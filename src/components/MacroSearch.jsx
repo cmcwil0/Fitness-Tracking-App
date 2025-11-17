@@ -15,11 +15,11 @@ const useDebounce = (value, delay = 400) => {
 const round = (n) => (typeof n === 'number' ? Math.round(n) : 0);
 const titleCase = (s = '') => s.charAt(0).toUpperCase() + s.slice(1);
 
-const MacroSearch = ({ onFocus, onBlur, onAddFood }) => {
-  const [search, setSearch] = useState('');
-  const [foods, setFoods] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+const MacroSearch = ({onFocus, onBlur, onAddFood}) => {
+    const [search, setSearch] = useState('');
+    const [foods, setFoods] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
   const debounced = useDebounce(search, 400);
 

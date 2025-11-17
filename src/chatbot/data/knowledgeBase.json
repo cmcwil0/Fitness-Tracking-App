@@ -1,0 +1,130 @@
+{
+  "nutrition": {
+    "title": "Nutrition",
+    "content": [
+      {
+        "topic": "Macronutrients",
+        "info": "Macronutrients are the three main nutrients your body needs in large amounts: proteins, carbohydrates, and fats. Proteins help build and repair tissues (aim for 0.8-1g per kg of body weight). Carbohydrates provide energy for workouts and daily activities (45-65% of daily calories). Healthy fats support hormone production and nutrient absorption (20-35% of daily calories)."
+      },
+      {
+        "topic": "Protein Sources",
+        "info": "High-quality protein sources include lean meats (chicken, turkey, lean beef), fish (salmon, tuna, cod), eggs, Greek yogurt, cottage cheese, legumes (lentils, chickpeas, black beans), tofu, tempeh, and protein supplements. Aim to distribute protein intake throughout the day for optimal muscle protein synthesis."
+      },
+      {
+        "topic": "Pre-Workout Nutrition",
+        "info": "Eat a balanced meal 2-3 hours before exercising, or a small snack 30-60 minutes before. Good pre-workout foods include bananas with peanut butter, oatmeal with berries, whole grain toast with avocado, or a protein smoothie. Focus on easily digestible carbs and moderate protein."
+      },
+      {
+        "topic": "Post-Workout Nutrition",
+        "info": "Within 30-60 minutes after exercise, consume a combination of protein and carbohydrates to support recovery. Good options include protein shakes with fruit, Greek yogurt with granola, chicken with rice, or a turkey sandwich. The 3:1 or 4:1 carb-to-protein ratio is ideal for recovery."
+      },
+      {
+        "topic": "Hydration",
+        "info": "Proper hydration is crucial for fitness performance. Drink at least 8-10 glasses of water daily, more if exercising. During workouts longer than 60 minutes, consider electrolyte drinks. Monitor urine color - pale yellow indicates good hydration. Drink 16-20 oz of water 2-3 hours before exercise and 8 oz every 15-20 minutes during exercise."
+      },
+      {
+        "topic": "Weight Loss Nutrition",
+        "info": "For weight loss, create a caloric deficit of 500-750 calories per day for safe, sustainable loss of 1-1.5 lbs per week. Focus on whole foods, lean proteins, vegetables, fruits, and whole grains. Avoid crash diets. Track your intake using apps if helpful. Combine with regular exercise for best results."
+      },
+      {
+        "topic": "Muscle Gain Nutrition",
+        "info": "To build muscle, maintain a slight caloric surplus of 250-500 calories above maintenance. Consume 1.6-2.2g of protein per kg of body weight. Eat frequently throughout the day (4-6 meals). Focus on nutrient-dense whole foods and ensure adequate carbohydrates to fuel intense workouts."
+      }
+    ]
+  },
+  "workouts": {
+    "title": "Workouts",
+    "content": [
+      {
+        "topic": "Beginner Workout Plan",
+        "info": "Start with 3 days per week of full-body workouts. Include basic compound movements: squats, push-ups, rows, planks, and lunges. Begin with 2-3 sets of 8-12 reps. Focus on proper form before adding weight. Rest at least one day between workout sessions. Gradually increase intensity over 4-6 weeks."
+      },
+      {
+        "topic": "Strength Training",
+        "info": "Strength training builds muscle and increases metabolism. Focus on compound exercises: squats, deadlifts, bench press, overhead press, and rows. Train each muscle group 2-3 times per week. Use progressive overload by gradually increasing weight, reps, or sets. Rest 48-72 hours between training the same muscle group."
+      },
+      {
+        "topic": "Cardio Exercises",
+        "info": "Cardio improves heart health and burns calories. Options include running, cycling, swimming, rowing, or jump rope. Aim for 150 minutes of moderate cardio or 75 minutes of vigorous cardio per week. Mix steady-state cardio with HIIT (High-Intensity Interval Training) for variety and maximum benefits."
+      },
+      {
+        "topic": "HIIT Workouts",
+        "info": "High-Intensity Interval Training alternates short bursts of intense exercise with recovery periods. Example: 30 seconds sprint, 90 seconds walk, repeat 8-10 times. HIIT burns calories efficiently, improves cardiovascular fitness, and can be done in 20-30 minutes. Do 2-3 HIIT sessions per week with rest days between."
+      },
+      {
+        "topic": "Core Exercises",
+        "info": "Core training strengthens abs, obliques, and lower back. Effective exercises include planks, dead bugs, bird dogs, Russian twists, bicycle crunches, and leg raises. Train core 2-3 times per week. Focus on control and stability rather than speed. Hold planks for 30-60 seconds, perform other exercises for 10-15 reps."
+      },
+      {
+        "topic": "Workout Recovery",
+        "info": "Recovery is essential for progress. Get 7-9 hours of sleep nightly. Take 1-2 complete rest days per week. Use active recovery like walking or yoga on off days. Stretch after workouts. Consider foam rolling for muscle soreness. Stay hydrated and eat adequate protein to support muscle repair."
+      },
+      {
+        "topic": "Home Workouts",
+        "info": "Effective home workouts require minimal equipment. Bodyweight exercises include push-ups, squats, lunges, planks, burpees, mountain climbers, and dips. Add resistance bands or dumbbells for variety. Follow workout videos or apps for guidance. Create a dedicated workout space and schedule consistent times."
+      },
+      {
+        "topic": "Gym Equipment Basics",
+        "info": "Essential gym equipment includes dumbbells, barbells, cable machines, and benches. Start with machines if you're new to learn proper movement patterns. Progress to free weights for better functional strength. Use squat racks for squats and bench press. Cable machines offer versatile exercise options. Always ask gym staff for equipment demonstrations."
+      }
+    ]
+  },
+  "goals": {
+    "title": "Goals",
+    "content": [
+      {
+        "topic": "Setting Fitness Goals",
+        "info": "Set SMART goals: Specific, Measurable, Achievable, Relevant, and Time-bound. Examples: 'Lose 10 pounds in 8 weeks' or 'Run 5K in under 30 minutes in 3 months'. Write goals down, track progress weekly, and adjust as needed. Break large goals into smaller milestones to stay motivated."
+      },
+      {
+        "topic": "Weight Loss Goals",
+        "info": "Healthy weight loss is 1-2 pounds per week. Create a caloric deficit through diet and exercise. Track food intake and exercise. Focus on sustainable habits rather than quick fixes. Celebrate non-scale victories like increased energy, better sleep, or clothes fitting better. Be patient and consistent."
+      },
+      {
+        "topic": "Muscle Building Goals",
+        "info": "Building muscle takes time - expect to gain 0.5-1 pound of muscle per month as a beginner. Focus on progressive overload in training. Eat in a slight caloric surplus with adequate protein. Take progress photos monthly. Measure body parts to track growth. Strength gains often precede visible muscle growth."
+      },
+      {
+        "topic": "Performance Goals",
+        "info": "Performance goals focus on what your body can do rather than how it looks. Examples: run faster, lift heavier, complete more reps, or improve flexibility. Test baseline performance, create a structured training plan, and retest every 4-6 weeks. This approach often leads to better long-term adherence."
+      },
+      {
+        "topic": "Staying Motivated",
+        "info": "Maintain motivation by finding activities you enjoy, working out with friends, tracking progress, setting mini-challenges, rewarding milestones (non-food rewards), varying your routine, listening to motivating music or podcasts, and remembering your 'why'. Expect ups and downs - motivation fluctuates, but discipline creates results."
+      },
+      {
+        "topic": "Overcoming Plateaus",
+        "info": "Plateaus are normal. Overcome them by changing your workout routine, increasing intensity, adjusting caloric intake, ensuring adequate sleep, managing stress, taking a deload week, or trying new activities. Sometimes plateaus mean your body is adapting - trust the process and stay consistent."
+      },
+      {
+        "topic": "Long-Term Sustainability",
+        "info": "Focus on building lifelong healthy habits rather than short-term results. Find a balance that fits your lifestyle. Don't aim for perfection - aim for consistency. Allow flexibility for social events and treats. Make fitness enjoyable, not punishment. Success comes from what you can maintain for years, not weeks."
+      }
+    ]
+  },
+  "general": {
+    "title": "General Fitness",
+    "content": [
+      {
+        "topic": "Getting Started",
+        "info": "Begin your fitness journey by assessing your current fitness level, setting realistic goals, and consulting a doctor if you have health concerns. Start slowly to avoid injury and burnout. Choose activities you enjoy to ensure long-term adherence. Consistency matters more than intensity when starting out."
+      },
+      {
+        "topic": "Exercise Frequency",
+        "info": "Aim for at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous activity per week, plus strength training 2-3 days per week. Beginners can start with 3 days per week and gradually increase. Listen to your body and include rest days for recovery."
+      },
+      {
+        "topic": "Proper Form",
+        "info": "Proper form prevents injuries and maximizes results. Start with lighter weights to master technique. Consider hiring a personal trainer for initial sessions. Watch instructional videos from reputable sources. Use mirrors to check form. If something hurts (beyond normal muscle fatigue), stop and reassess your technique."
+      },
+      {
+        "topic": "Common Mistakes",
+        "info": "Avoid these common mistakes: doing too much too soon, skipping warm-ups and cool-downs, neglecting rest days, having poor form, not tracking progress, inconsistent effort, ignoring nutrition, comparing yourself to others, and expecting immediate results. Focus on sustainable, gradual improvements."
+      },
+      {
+        "topic": "Fitness Tracking",
+        "info": "Track your fitness journey using apps, journals, or spreadsheets. Monitor: workout frequency, exercises performed, weights/reps, body measurements, progress photos, how you feel, and sleep quality. Review data weekly or monthly to identify trends and adjust your program accordingly."
+      }
+    ]
+  }
+}

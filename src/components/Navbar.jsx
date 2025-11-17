@@ -39,6 +39,7 @@ const Navbar = () => {
             <li><NavLink to="/fitness">Fitness</NavLink></li>
             <li><NavLink to="/goalform">GoalForm</NavLink></li>
             <li><NavLink to="/signup">Signup</NavLink></li>
+            <li><NavLink to="/userprofile" >Profile</NavLink></li>
           </ul>
 
           {/* RIGHT: username (if logged in) + toggle button */}
