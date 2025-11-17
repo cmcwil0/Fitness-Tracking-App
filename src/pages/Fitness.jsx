@@ -2,6 +2,7 @@ import classes from '../css/Fitness.module.css';
 import { getCurrentDate } from './Dashboard.jsx';
 import FitnessCircle from '../components/FitnessCircle.jsx';
 import { useState } from 'react';
+import FitnessCalendar from '../components/FitnessCalendar.jsx';
 
 const workoutLog = [
   { id: 1, name: 'Push-ups', description: 'Standard grip push ups' },
@@ -32,6 +33,7 @@ const Fitness = () => {
           <>
             <div className={classes.dateLabel}>{getCurrentDate()}</div>
             <FitnessCircle onButtonClick={handleFitnessCircle} />
+            <FitnessCalendar />
           </>
         )}
 
