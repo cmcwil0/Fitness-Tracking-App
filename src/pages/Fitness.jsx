@@ -32,7 +32,6 @@ const Fitness = () => {
         {!isWorkoutFocused && (
           <>
             <div className={classes.dateLabel}>{getCurrentDate()}</div>
-        </div>
             <FitnessCircle onButtonClick={handleFitnessCircle} />
             <FitnessCalendar />
         
