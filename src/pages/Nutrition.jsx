@@ -82,6 +82,7 @@ const Nutrition = () => {
     })();
   }, []);
 
+  //should be removed I think???
   // When user clicks “+” on a search result
   // const handleAddFood = (food) => {
   //   setCalorieCount(v => v + (food.calories || 0));
