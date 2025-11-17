@@ -58,41 +58,49 @@ const MacroSearch = ({onFocus, onBlur, onAddFood}) => {
   return (
     <div className={classes.macroSearchContainer}>
       <form className={classes.searchFood}>
-          <input 
-            type="text" 
-            placeholder='search for meal...'
-            value={search}
-            onChange={element => setSearch(element.target.value)}
-            onFocus={onFocus}
-            onBlur={onBlur}
-             />
-          <ul className={classes.foodsList}>
-            {search !== '' && filteredFoods.map(item => (
-              <li key={item.id}>
-                <div className={classes.mainInfo}>
-                  <span className={classes.itemName}>{item.name}</span>
-                  <span className={classes.itemBrand}>{item.brand}</span>
-                </div>
-                <div className={classes.subInfo}>
-                  <span className={classes.itemCalories}>{item.calories}<span>kcal</span></span>
-                  <button className={classes.infoButton} type="button">?</button>
-                  <button
-                    className={classes.addFoodButton}
-                    type="button"
-                    onMouseDown={(event) => {
-                      event.preventDefault();
-                      if (onAddFood) {
-                        onAddFood(item);
-                      }
-                    }}
-                  >
-                    +
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul> 
-        </form>
+        <input
+          type="text"
+          placeholder="search for meal..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        />
+        {error && <div style={{ fontSize: 12, marginTop: 6 }}>{error}</div>}
+
+        <ul className={classes.foodsList}>
+          {search !== '' && filteredFoods.map(item => (
+            <li key={item.id}>
+              <div className={classes.mainInfo}>
+                <span className={classes.itemName}>{item.name}</span>
+                <span className={classes.itemBrand}>{item.brand}</span>
+              </div>
+
+              <div className={classes.subInfo}>
+                <span className={classes.itemCalories}>
+                  {item.calories}<span>kcal</span>
+                </span>
+
+                <span style={{ fontSize: 12, opacity: 0.85, marginRight: 8 }}>
+                  {item.carbs}g C · {item.protein}g P · {item.fat}g F
+                </span>
+
+                <button
+                  className={classes.infoButton}
+                  type="button"
+                >?</button>
+
+                <button
+                  className={classes.addFoodButton}
+                  type="button"
+                  onMouseDown={e => e.preventDefault()} 
+                  onClick={() => onAddFood?.(item)}
+                >+</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </form>
     </div>
   );
 };

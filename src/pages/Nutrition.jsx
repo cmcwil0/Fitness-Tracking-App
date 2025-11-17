@@ -102,73 +102,38 @@ const Nutrition = () => {
             <div className={classes.progressBar}>
               <CircularProgressbar
                 value={calorieCount}
-                maxValue={calorieTarget}  
-                text={`${formatNumber(calorieCount)}`}
-                styles={buildStyles({
-                  // pathColor: ``,
-                })}
-                 />
+                maxValue={calorieTarget}
+                text={`${calorieCount}/${calorieTarget}`}
+                styles={buildStyles({})}
+              />
             </div>
 
             <div className={`${classes.cpfContainer}`}>
-                <div className={classes.carbCount}>
-                  <div>{`${formatNumber(carbCount)}g`}</div>
-                  <label>Carbohydrates</label>
-                </div>
-                <div className={classes.proteinCount}>
-                  <div>{`${formatNumber(proteinCount)}g`}</div>
-                  <label>Protein</label>
-                </div>
-                <div className={classes.fatCount}>
-                  <div>{`${formatNumber(fatCount)}g`}</div>
-                  <label>Fat</label>
-                </div>
+              <div className={classes.carbCount}>
+                <div>{`${carbCount}g`}</div>
+                <label>Carbohydrates</label>
+              </div>
+              <div className={classes.proteinCount}>
+                <div>{`${proteinCount}g`}</div>
+                <label>Protein</label>
+              </div>
+              <div className={classes.fatCount}>
+                <div>{`${fatCount}g`}</div>
+                <label>Fat</label>
+              </div>
             </div>
                 </> }
-            <MacroSearch onFocus={() => setIsSearchFocused(true)} onBlur={() => setIsSearchFocused(false)} onAddFood={handleAddFood}/>
-          {isSearchFocused === false &&
-            <>
-
-            <div className={classes.trackedFoodsSection}>
-                <h3>Tracked foods</h3>
-                {selectedFoods.length > 0 ? (
-                  <ul className={classes.trackedFoodsList}>
-                    {selectedFoods.map((food) => (
-                      <li key={food.logId}>
-                        <div className={classes.trackedFoodSummary}>
-                          <span className={classes.trackedFoodName}>{food.name}</span>
-                          <span className={classes.trackedFoodCalories}>{formatNumber(food.calories)} kcal</span>
-                        </div>
-                        <div className={classes.trackedFoodMacros}>
-                          <span>{formatNumber(food.carbs)}g C</span>
-                          <span>{formatNumber(food.protein)}g P</span>
-                          <span>{formatNumber(food.fat)}g F</span>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className={classes.trackedFoodsEmpty}>No foods tracked yet. Use the search above to add items.</p>
-                )}
-              </div>            
-              <div className={classes.weeklyChartContainer}>
-                  <div className={classes.weeklyChart}>
-                    {daysOfWeek.map((element, index) => ( //renders for each day of the week
-                    <div className={`${classes[`${element}Container`]} ${classes.barContainer}`}  key={index}>
-                    <div
-                      className={`${classes[`${element}Bar`]} ${classes.bar}`}
-                      style={{height: `${Math.min((calorieCount / calorieTarget) * 100, 100)}%`}}
-                    ></div>
-                      <label>{element}</label>
-                    </div>
-                    ))}
-                  </div>
-              </div>
-            </>
-          }
-          {isSearchFocused === true && 
-            <div className={classes.searchContainer}>
-              
+            <MacroSearch onFocus={() => setIsSearchFocused(true)} onBlur={() => setIsSearchFocused(false)} onAddFood={handleAddFood} />
+            <div className={classes.bottomContent}>
+              {isSearchFocused === false &&
+                <>
+                  <WeeklyGraph />
+                </>
+              }
+              {isSearchFocused === true && 
+                <div className={classes.searchContainer}>
+                </div>
+              }
             </div>
          
 
