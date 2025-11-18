@@ -7,10 +7,19 @@ import MacroProgressCard from '../components/MacroProgressCard';
 import WeeklyGraph from '../components/WeeklyGraph';
 import { isLoggedIn, authHeaders } from '../utils/auth.js';
 import { getCurrentDate } from './Dashboard.jsx';
+import { BarChart } from '@mui/x-charts';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
-const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 
+const sampleData = [
+      { day: 'Monday', calories: 2400 },
+      { day: 'Tuesday', calories: 2800 },
+      { day: 'Wednesday', calories: 2200 },
+      { day: 'Thursday', calories: 3000 },
+      { day: 'Friday', calories: 2600 },
+      { day: 'Saturday', calories: 2900 },
+      { day: 'Sunday', calories: 2500 }
+    ];
 
 
 export const NutritionCard = () => {
@@ -82,6 +91,15 @@ const Nutrition = () => {
     })();
   }, []);
 
+  //should be removed I think???
+  // When user clicks “+” on a search result
+  // const handleAddFood = (food) => {
+  //   setCalorieCount(v => v + (food.calories || 0));
+  //   setCarbCount(v => v + (food.carbs || 0));
+  //   setProteinCount(v => v + (food.protein || 0));
+  //   setFatCount(v => v + (food.fat || 0));
+  // };
+
   return (
     <div className={`${classes.nutritionPage}`}>
       <div className={`${classes.nutritionContainer}`}>
@@ -93,77 +111,65 @@ const Nutrition = () => {
             <div className={classes.progressBar}>
               <CircularProgressbar
                 value={calorieCount}
-                maxValue={calorieTarget}  
-                text={`${formatNumber(calorieCount)}`}
-                styles={buildStyles({
-                  // pathColor: ``,
-                })}
-                 />
+                maxValue={calorieTarget}
+                text={`${calorieCount}/${calorieTarget}`}
+                styles={buildStyles({})}
+              />
             </div>
 
             <div className={`${classes.cpfContainer}`}>
-                <div className={classes.carbCount}>
-                  <div>{`${formatNumber(carbCount)}g`}</div>
-                  <label>Carbohydrates</label>
-                </div>
-                <div className={classes.proteinCount}>
-                  <div>{`${formatNumber(proteinCount)}g`}</div>
-                  <label>Protein</label>
-                </div>
-                <div className={classes.fatCount}>
-                  <div>{`${formatNumber(fatCount)}g`}</div>
-                  <label>Fat</label>
-                </div>
+              <div className={classes.carbCount}>
+                <div>{`${carbCount}g`}</div>
+                <label>Carbohydrates</label>
+              </div>
+              <div className={classes.proteinCount}>
+                <div>{`${proteinCount}g`}</div>
+                <label>Protein</label>
+              </div>
+              <div className={classes.fatCount}>
+                <div>{`${fatCount}g`}</div>
+                <label>Fat</label>
+              </div>
             </div>
-                </> }
-            <MacroSearch onFocus={() => setIsSearchFocused(true)} onBlur={() => setIsSearchFocused(false)} onAddFood={handleAddFood}/>
+          </> }
+        <MacroSearch onFocus={() => setIsSearchFocused(true)} onBlur={() => setIsSearchFocused(false)} onAddFood={handleAddFood} />
+        <div className={classes.bottomContent}>
+          <label htmlFor=""></label>
           {isSearchFocused === false &&
             <>
-
-            <div className={classes.trackedFoodsSection}>
-                <h3>Tracked foods</h3>
-                {selectedFoods.length > 0 ? (
-                  <ul className={classes.trackedFoodsList}>
-                    {selectedFoods.map((food) => (
-                      <li key={food.logId}>
-                        <div className={classes.trackedFoodSummary}>
-                          <span className={classes.trackedFoodName}>{food.name}</span>
-                          <span className={classes.trackedFoodCalories}>{formatNumber(food.calories)} kcal</span>
-                        </div>
-                        <div className={classes.trackedFoodMacros}>
-                          <span>{formatNumber(food.carbs)}g C</span>
-                          <span>{formatNumber(food.protein)}g P</span>
-                          <span>{formatNumber(food.fat)}g F</span>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className={classes.trackedFoodsEmpty}>No foods tracked yet. Use the search above to add items.</p>
-                )}
-              </div>            
-              <div className={classes.weeklyChartContainer}>
-                  <div className={classes.weeklyChart}>
-                    {daysOfWeek.map((element, index) => ( //renders for each day of the week
-                    <div className={`${classes[`${element}Container`]} ${classes.barContainer}`}  key={index}>
-                    <div
-                      className={`${classes[`${element}Bar`]} ${classes.bar}`}
-                      style={{height: `${Math.min((calorieCount / calorieTarget) * 100, 100)}%`}}
-                    ></div>
-                      <label>{element}</label>
-                    </div>
-                    ))}
-                  </div>
-              </div>
+              <BarChart
+                width={500}
+                height={250}
+                borderRadius={10}
+                series={[{
+                    data: sampleData.map(item => item.calories),
+                    color: 'var(--accent-color)'
+                  }]}
+                xAxis={[{
+                    data: sampleData.map(item => item.day.slice(0, 3)),
+                    scaleType: 'band',
+                    disableLine: true,
+                    disableTicks: true,
+                    tickLabelStyle: { fill: 'var(--accent-color)' }
+                  }]}
+                yAxis={[{
+                  disableLine: true,
+                  disableTicks: true,
+                  tickLabelStyle: { display: 'none' }
+                }]}
+                margin={{
+                  left: 0,
+                  right: 50,
+                  bottom: 50
+                }}
+              />
             </>
           }
           {isSearchFocused === true && 
             <div className={classes.searchContainer}>
-              
             </div>
           }
-         
-
+        </div>
       </div>
     </div>
   );

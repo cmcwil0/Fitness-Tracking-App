@@ -1,0 +1,86 @@
+.userProfilePage {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userProfileContainer {
+    width: 40%;
+    height: 70%;
+    background: var(--primary-color);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* header */
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.header .profilePicture {
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    position: relative;
+}
+
+.profilePicture .editButton {
+    position: absolute;
+    bottom: -7px;
+    right: -7px;
+    opacity: 60%;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.profilePicture .editButton:hover {
+    opacity: 100%;
+}
+
+.header .mainText {
+    margin-left: 25px;
+}
+
+.header .userName {
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+.header .userEmail {
+    opacity: 85%;
+}
+
+/* mainsection  */
+
+
+.profileCard {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: var(--secondary-color);
+    border-radius: 10px;
+    padding: 10px 25px;
+    position: relative;
+}
+
+.profileCard label {
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.profileCard section {
+    margin-left: auto;
+}
+
+.profileCard .editButton {
+    position: relative;
+    left: 10px;
+}

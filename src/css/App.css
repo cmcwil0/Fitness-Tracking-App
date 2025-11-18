@@ -1,0 +1,31 @@
+
+/* scrollbar styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    margin: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+    border: 2px solid var(--secondary-color);
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* ::-webkit-scrollbar-thumb:hover {
+} */
+
+/* Hide scrollbar on mobile but keep functionality */
+@media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+    }
+}
