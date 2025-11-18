@@ -19,7 +19,7 @@ const presets = [
 const Fitness = () => {
   const [workoutLogged, setWorkoutLogged] = useState(false);
   const [isWorkoutFocused, setIsWorkoutFocused] = useState(false);
-  const [isSearching, setIsSearching] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
   const [workoutType, setWorkoutType] = useState('');
   const [currentPreset, setCurrentPreset] = useState('');
 
@@ -31,13 +31,15 @@ const Fitness = () => {
     // movement will be added to workout
   }
 
+  
+
   const handleLogWorkout = () => {
     //whole workout data will be logged
     setIsWorkoutFocused(false);
   }
 
   const handleBackButton = () => {
-    setIsWorkoutFocused(false);
+    setIsSearching(false);
   }
 
 
@@ -82,9 +84,11 @@ const Fitness = () => {
                     }
                     <option value="">Add New Preset</option>
                   </select>
-                  <div className={classes.backButtonContainer}>
-                    <button className={classes.backButton} onClick={() => handleBackButton()}>back</button>
-                </div>
+                  {isSearching &&
+                    <div className={classes.backButtonContainer}>
+                      <button className={classes.backButton} onClick={() => handleBackButton()}>back</button>
+                    </div>
+                  }
                 </div>
               </div>
            
@@ -126,7 +130,7 @@ const Fitness = () => {
                       </div>
                     </li>
                   ))}
-                  <button className={classes.addWorkoutButton} onClick={() => handleAddWorkout()}>Add Workout</button>
+                  <button className={classes.addWorkoutButton} onClick={() => setIsSearching(true)}>Add Workout</button>
                 </ul>
               }
               {isSearching && //is searching for workout

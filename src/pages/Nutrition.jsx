@@ -7,10 +7,19 @@ import MacroProgressCard from '../components/MacroProgressCard';
 import WeeklyGraph from '../components/WeeklyGraph';
 import { isLoggedIn, authHeaders } from '../utils/auth.js';
 import { getCurrentDate } from './Dashboard.jsx';
+import { BarChart } from '@mui/x-charts';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
-const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 
+const sampleData = [
+      { day: 'Monday', calories: 2400 },
+      { day: 'Tuesday', calories: 2800 },
+      { day: 'Wednesday', calories: 2200 },
+      { day: 'Thursday', calories: 3000 },
+      { day: 'Friday', calories: 2600 },
+      { day: 'Saturday', calories: 2900 },
+      { day: 'Sunday', calories: 2500 }
+    ];
 
 
 export const NutritionCard = () => {
@@ -122,21 +131,45 @@ const Nutrition = () => {
                 <label>Fat</label>
               </div>
             </div>
-                </> }
-            <MacroSearch onFocus={() => setIsSearchFocused(true)} onBlur={() => setIsSearchFocused(false)} onAddFood={handleAddFood} />
-            <div className={classes.bottomContent}>
-              {isSearchFocused === false &&
-                <>
-                  <WeeklyGraph />
-                </>
-              }
-              {isSearchFocused === true && 
-                <div className={classes.searchContainer}>
-                </div>
-              }
+          </> }
+        <MacroSearch onFocus={() => setIsSearchFocused(true)} onBlur={() => setIsSearchFocused(false)} onAddFood={handleAddFood} />
+        <div className={classes.bottomContent}>
+          <label htmlFor=""></label>
+          {isSearchFocused === false &&
+            <>
+              <BarChart
+                width={500}
+                height={250}
+                borderRadius={10}
+                series={[{
+                    data: sampleData.map(item => item.calories),
+                    color: 'var(--accent-color)'
+                  }]}
+                xAxis={[{
+                    data: sampleData.map(item => item.day.slice(0, 3)),
+                    scaleType: 'band',
+                    disableLine: true,
+                    disableTicks: true,
+                    tickLabelStyle: { fill: 'var(--accent-color)' }
+                  }]}
+                yAxis={[{
+                  disableLine: true,
+                  disableTicks: true,
+                  tickLabelStyle: { display: 'none' }
+                }]}
+                margin={{
+                  left: 0,
+                  right: 50,
+                  bottom: 50
+                }}
+              />
+            </>
+          }
+          {isSearchFocused === true && 
+            <div className={classes.searchContainer}>
             </div>
-         
-
+          }
+        </div>
       </div>
     </div>
   );

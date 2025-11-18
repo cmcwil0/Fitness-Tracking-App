@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import classes from '../css/FitnessCalendar.module.css'
+import { LineChart } from '@mui/x-charts';
 
 const FitnessCalendar = () => {
     const [currentWeekStart, setCurrentWeekStart] = useState(() => {
@@ -52,6 +53,7 @@ const FitnessCalendar = () => {
                 ))}
             </ul>
         </div>
+        
     </div>
   )
 }
