@@ -1,0 +1,57 @@
+.fitnessSearchContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.searchBar {
+    outline: none;
+    border-radius: 10px;
+    border: 2px solid var(--accent-color);
+    background: none;
+    padding: 10px;
+    color: var(--accent-color);
+    width: 50%;
+    align-self: center;
+    background: var(--secondary-color);
+}
+
+.searchResults {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.searchResultCard {
+    width: 100%;
+    height: 50px;
+    background: var(--secondary-color);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.workoutName {
+    font-weight: 500;
+    margin-left: 50px;
+}
+
+
+.cardButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.infoButton, .addWorkoutButton {
+    cursor: pointer;
+}
