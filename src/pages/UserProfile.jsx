@@ -34,20 +34,10 @@ const ProfileCard = ({ name, value, onEdit }) => (
 
 const UserProfile = () => {
   const [currentSection, setCurrentSection] = useState('main');
-  const [fields, setFields] = useState({
-    name: { text: 'John Doe', isEditing: false },
-    email: { text: 'john.doe@example.com', isEditing: false },
-  });
+  
 
-  const handleEditField = (fieldName, newValue, toggleEditing = false) => {
-    setFields((prevFields) => ({
-      ...prevFields,
-      [fieldName]: {
-        ...prevFields[fieldName],
-        text: newValue !== null ? newValue : prevFields[fieldName].text,
-        isEditing: toggleEditing !== null ? toggleEditing : prevFields[fieldName].isEditing,
-      },
-    }));
+  const handleEditField = () => {
+    
   };
 
   const handleSectionChange = (section) => {
@@ -75,8 +65,8 @@ const UserProfile = () => {
             </span>
           </div>
           <div className={classes.mainText}>
-            <div className={classes.userName}>{fields.name.text}</div>
-            <div className={classes.userEmail}>{fields.email.text}</div>
+            <div className={classes.userName}>{'John Doe'}</div>
+            <div className={classes.userEmail}>{'John.doe@example.com'}</div>
           </div>
         </div>
         <div className={classes.mainSection}>
@@ -89,12 +79,12 @@ const UserProfile = () => {
             <>
               <ProfileCard
                 name="name"
-                value={fields.name}
+                value={``}
                 onEdit={handleEditField}
               />
               <ProfileCard
                 name="email"
-                value={fields.email}
+                value={``}
                 onEdit={handleEditField}
               />
             </>
@@ -102,7 +92,20 @@ const UserProfile = () => {
           {currentSection === 'info' && (
             <>
               <ProfileCard 
-                name=""
+                name="height"
+                value={``}
+              />
+              <ProfileCard 
+                name="weight"
+                value={``}
+              />
+              <ProfileCard 
+                name="age"
+                value={``}
+              />
+              <ProfileCard 
+                name="gender"
+                value={``}
               />
             </>
           )}

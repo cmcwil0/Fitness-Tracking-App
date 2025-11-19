@@ -1,10 +1,18 @@
 .fitnessCalendarContainer {
     border-radius: 10px;
+    height: 300px;
+    width: 80%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .selectDateContainer {
     width: 100%;
     height: 20%;
+    display: flex;
+    justify-content: center;
 }
 
 .selectDateContainer ul {
@@ -49,3 +57,70 @@
     border: 3px solid #91a5ca;
     border-radius: 50%;
 }
+
+/* maincontent */   
+
+.mainContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr 1fr; 
+    gap: 10px; 
+    height: 200px;
+}
+
+.workoutMilestones {
+    grid-column: 1; 
+    grid-row: 1 / 3; 
+    background: var(--secondary-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.workoutCompletedContainer {
+    grid-column: 2; 
+    grid-row: 1; 
+    background: var(--secondary-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.workoutCompletedText {
+    font-size: 0.77rem;
+    text-align: center;
+    opacity: 90%;
+}
+
+.workoutDurationContainer {
+    grid-column: 2; 
+    grid-row: 2; 
+    background: var(--secondary-color);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.workoutDurationContainer .workoutDuration {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.workoutDurationContainer label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    opacity: 80%;
+}
+
+
+
+
+

@@ -60,6 +60,12 @@
 
 /* mainsection  */
 
+.mainSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .navButtons button {
     background: var(--secondary-color);
     border: none;    
@@ -71,7 +77,6 @@
 .navButtons .buttonSelected {
     
 }
-
 
 .profileCard {
     display: flex;

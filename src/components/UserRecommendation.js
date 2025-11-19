@@ -53,6 +53,6 @@ export const NutritionRecommendation = (height, weight, gender, age, activityLev
 
 }   
 
-const WorkoutRecommendation = () => {
-
+export const WorkoutRecommendation = () => {
+    
 }

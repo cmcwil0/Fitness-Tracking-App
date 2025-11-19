@@ -21,6 +21,17 @@ const sampleData = [
       { day: 'Sunday', calories: 2500 }
     ];
 
+    // First, you'll need sample data with macros breakdown
+const sampleDataWithMacros = [
+  { day: 'Monday', calories: 2400, protein: 120, carbs: 300, fat: 80 },
+  { day: 'Tuesday', calories: 2800, protein: 140, carbs: 350, fat: 95 },
+  { day: 'Wednesday', calories: 2200, protein: 110, carbs: 275, fat: 75 },
+  { day: 'Thursday', calories: 3000, protein: 150, carbs: 375, fat: 105 },
+  { day: 'Friday', calories: 2600, protein: 130, carbs: 325, fat: 85 },
+  { day: 'Saturday', calories: 2900, protein: 145, carbs: 362, fat: 98 },
+  { day: 'Sunday', calories: 2500, protein: 125, carbs: 312, fat: 83 }
+];
+
 
 export const NutritionCard = () => {
     return (
@@ -141,27 +152,45 @@ const Nutrition = () => {
                 width={500}
                 height={250}
                 borderRadius={10}
-                series={[{
-                    data: sampleData.map(item => item.calories),
-                    color: 'var(--accent-color)'
-                  }]}
+                series={[
+                  {
+                    data: sampleDataWithMacros.map(item => item.protein * 4),
+                    stack: 'calories',
+                    color: '#FF6B6B',
+                    label: 'Protein'
+                  },
+                  {
+                    data: sampleDataWithMacros.map(item => item.carbs * 4),
+                    stack: 'calories',
+                    color: '#4ECDC4',
+                    label: 'Carbs'
+                  },
+                  {
+                    data: sampleDataWithMacros.map(item => item.fat * 9),
+                    stack: 'calories',
+                    color: '#45B7D1',
+                    label: 'Fat'
+                  }
+                ]}
                 xAxis={[{
-                    data: sampleData.map(item => item.day.slice(0, 3)),
-                    scaleType: 'band',
-                    disableLine: true,
-                    disableTicks: true,
-                    tickLabelStyle: { fill: 'var(--accent-color)' }
-                  }]}
+                  data: sampleDataWithMacros.map(item => item.day.slice(0, 3)),
+                  scaleType: 'band',
+                  disableLine: true,
+                  disableTicks: true,
+                  tickLabelStyle: { fill: 'var(--accent-color)' }
+                }]}
                 yAxis={[{
                   disableLine: true,
                   disableTicks: true,
                   tickLabelStyle: { display: 'none' }
                 }]}
+                slotProps={{ legend: { hidden: true } }}
                 margin={{
                   left: 0,
                   right: 50,
                   bottom: 50
                 }}
+                hideLegend
               />
             </>
           }

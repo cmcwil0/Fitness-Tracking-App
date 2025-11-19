@@ -48,7 +48,6 @@ const Fitness = () => {
       <div className={classes.fitnessContainer}>
         {!isWorkoutFocused && ( //is not logging
           <div className={classes.defaultItems}>
-            <div className={classes.dateLabel}>{getCurrentDate()}</div>
             <FitnessCircle onButtonClick={handleFitnessCircle} />
             <div className={classes.workoutCompletedText}>{workoutLogged ? 'Workout Completed' : 'Todays Workout Not Completed'}</div>
             <FitnessCalendar />
