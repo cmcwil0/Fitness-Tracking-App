@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.5",
+    "@mui/x-charts": "^8.18.0",
     "i": "^0.3.7",
     "react": "^19.2.0",
     "react-circular-progressbar": "^2.2.0",
