@@ -60,6 +60,18 @@
 
 /* mainsection  */
 
+.navButtons button {
+    background: var(--secondary-color);
+    border: none;    
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.navButtons .buttonSelected {
+    
+}
+
 
 .profileCard {
     display: flex;
