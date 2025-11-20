@@ -1,0 +1,60 @@
+.quickActionsContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.title {
+  margin: 0;
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.actionsGrid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.actionButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--secondary-color);
+  border-radius: 12px;
+  padding: 16px;
+  text-decoration: none;
+  color: var(--accent-color);
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  border-color: var(--action-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.actionIcon {
+  width: 40px;
+  height: 40px;
+  background: var(--action-color);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.actionTitle {
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
+}

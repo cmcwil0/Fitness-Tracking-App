@@ -1,0 +1,122 @@
+.weeklyGoalsContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h3 {
+  margin: 0;
+  color: var(--accent-color);
+  font-size: 1.1rem;
+}
+
+.weekProgress {
+  background: var(--secondary-color);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--accent-color);
+}
+
+.goalsList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.goalItem {
+  background: var(--secondary-color);
+  padding: 12px;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.goalItem:hover {
+  transform: translateY(-1px);
+}
+
+.goalHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.goalIcon {
+  font-size: 1.2rem;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  border-radius: 6px;
+}
+
+.goalInfo {
+  flex: 1;
+}
+
+.goalTitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.goalProgress {
+  font-size: 0.75rem;
+  color: var(--accent-color);
+  opacity: 0.8;
+}
+
+.goalPercentage {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.progressBarContainer {
+  height: 6px;
+  background: var(--primary-color);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.summary {
+  background: var(--secondary-color);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: auto;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summaryLabel {
+  font-size: 0.85rem;
+  color: var(--accent-color);
+}
+
+.summaryValue {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--accent-color);
+}

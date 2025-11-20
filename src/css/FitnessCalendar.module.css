@@ -120,6 +120,66 @@
     opacity: 80%;
 }
 
+/* Workout Milestones Styling */
+.restDayContent,
+.workoutDayContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    gap: 8px;
+}
+
+.restDayContent h3,
+.workoutDayContent h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.restDayContent p,
+.workoutPreset {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 85%;
+    font-weight: 500;
+}
+
+.milestonesGrid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.milestone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.milestoneValue {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.milestoneLabel {
+    font-size: 0.65rem;
+    opacity: 75%;
+    font-weight: 500;
+}
+
+.restDayContent .milestone {
+    margin-top: auto;
+}
+
 
 
 

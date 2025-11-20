@@ -39,6 +39,62 @@ const FitnessCalendar = () => {
 
     const weekDays = getWeekDays(currentWeekStart);
 
+    // Generate workout milestones based on selected date
+    const getWorkoutMilestones = (date) => {
+        const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        
+        // Sample workout data - in a real app this would come from your backend
+        const milestoneData = {
+            0: { // Sunday
+                streak: 5,
+                calories: 2150,
+                exercises: 8,
+                restDay: true
+            },
+            1: { // Monday
+                streak: 6,
+                calories: 2890,
+                exercises: 12,
+                workoutPreset: 'Chest & Triceps'
+            },
+            2: { // Tuesday
+                streak: 7,
+                calories: 3200,
+                exercises: 10,
+                workoutPreset: 'Cardio & Core'
+            },
+            3: { // Wednesday
+                streak: 8,
+                calories: 2750,
+                exercises: 11,
+                workoutPreset: 'Back & Biceps'
+            },
+            4: { // Thursday
+                streak: 9,
+                calories: 3100,
+                exercises: 13,
+                workoutPreset: 'Legs & Glutes'
+            },
+            5: { // Friday
+                streak: 10,
+                calories: 2950,
+                exercises: 9,
+                workoutPreset: 'Shoulders & Arms'
+            },
+            6: { // Saturday
+                streak: 11,
+                calories: 3400,
+                exercises: 15,
+                workoutPreset: 'Full Body HIIT'
+            }
+        };
+
+        return milestoneData[dayOfWeek] || milestoneData[1]; // Default to Monday if not found
+    };
+
+    const currentMilestones = getWorkoutMilestones(selectedDate);
+
   return (
     <div className={classes.fitnessCalendarContainer}>
         <div className={classes.selectDateContainer}>
@@ -58,7 +114,34 @@ const FitnessCalendar = () => {
         </div>
         <div className={classes.mainContent}>
                 <div className={classes.workoutMilestones}>
-
+                    {currentMilestones.restDay ? (
+                        <div className={classes.restDayContent}>
+                            <svg xmlns="http://www.w3.org/2000/svg" height='30px' width='30px' fill='var(--accent-color)' viewBox="0 0 512 512">
+                                <path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                            </svg>
+                            <h3>Rest Day</h3>
+                            <p>Recovery & Stretching</p>
+                            <div className={classes.milestone}>
+                                <span className={classes.milestoneValue}>{currentMilestones.streak}</span>
+                                <span className={classes.milestoneLabel}>Day Streak</span>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className={classes.workoutDayContent}>
+                            <h3>Today's Focus</h3>
+                            <p className={classes.workoutPreset}>{currentMilestones.workoutPreset}</p>
+                            <div className={classes.milestonesGrid}>
+                                <div className={classes.milestone}>
+                                    <span className={classes.milestoneValue}>{currentMilestones.streak}</span>
+                                    <span className={classes.milestoneLabel}>Day Streak</span>
+                                </div>
+                                <div className={classes.milestone}>
+                                    <span className={classes.milestoneValue}>{currentMilestones.exercises}</span>
+                                    <span className={classes.milestoneLabel}>Exercises</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className={classes.workoutCompletedContainer}>
                     {workoutCompleted && (<svg xmlns="http://www.w3.org/2000/svg" width='25px' fill='var(--accent-color)' viewBox="0 0 448 512"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>)}

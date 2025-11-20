@@ -71,9 +71,9 @@ const UserProfile = () => {
         </div>
         <div className={classes.mainSection}>
           <div className={classes.navButtons}>
-            <button onClick={() => handleSectionChange('main')}>Main</button>
-            <button onClick={() => handleSectionChange('info')}>Info</button>
-            <button onClick={() => handleSectionChange('other')}>Other</button>
+            <button className={`${currentSection === 'main' && classes.buttonSelected}`} onClick={() => handleSectionChange('main')}>Main</button>
+            <button className={`${currentSection === 'info' && classes.buttonSelected}`} onClick={() => handleSectionChange('info')}>Info</button>
+            <button className={`${currentSection === 'other' && classes.buttonSelected}`} onClick={() => handleSectionChange('other')}>Other</button>
           </div>
           {currentSection === 'main' && (
             <>

@@ -66,16 +66,23 @@
     gap: 20px;
 }
 
+.navButtons {
+    display: flex;
+    gap: 7px;
+}
+
 .navButtons button {
     background: var(--secondary-color);
     border: none;    
     outline: none;
     border-radius: 10px;
     cursor: pointer;
+    padding: 5px;
+    transition: all 0.15s ease;
 }
 
 .navButtons .buttonSelected {
-    
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .profileCard {

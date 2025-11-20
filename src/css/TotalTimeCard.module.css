@@ -1,0 +1,106 @@
+.totalTimeContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+.title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent-color);
+}
+
+.mainStat {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.timeValue {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  line-height: 1;
+}
+
+.timeLabel {
+  font-size: 0.8rem;
+  color: var(--accent-color);
+  opacity: 0.8;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.statItem {
+  text-align: center;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+}
+
+.statValue {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: var(--accent-color);
+}
+
+.statLabel {
+  font-size: 0.7rem;
+  color: var(--accent-color);
+  opacity: 0.8;
+}
+
+.progressSection {
+  margin-top: auto;
+}
+
+.progressLabel {
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+  text-align: center;
+  color: var(--accent-color);
+  opacity: 0.9;
+}
+
+.progressBar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.progressText {
+  font-size: 0.7rem;
+  text-align: center;
+  color: var(--accent-color);
+  opacity: 0.8;
+}

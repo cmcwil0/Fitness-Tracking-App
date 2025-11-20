@@ -76,13 +76,12 @@ const Fitness = () => {
                 <div>
                   <label>Preset:</label>
                   <select value={currentPreset} onChange={e => setCurrentPreset(e.target.value)}>
-                    <option value="" disabled selected>Select</option>
                     {
                       presets.map(preset => (
                         <option value="" key={preset.id}>{preset.name}</option>
                       ))
                     }
-                    <option value="">Add New Preset</option>
+                    <option value="add-new-preset" selected>Add New Preset</option>
                   </select>
                   {isSearching &&
                     <div className={classes.backButtonContainer}>
@@ -126,7 +125,7 @@ const Fitness = () => {
                               </svg>
                             </button>
                           </div>
-                        <button className={classes.prButton}>New PR</button>
+                        {/* <button className={classes.prButton}>New PR</button> */}
                       </div>
                     </li>
                   ))}

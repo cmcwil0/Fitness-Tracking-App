@@ -43,7 +43,6 @@ const Login = () => {
 
   return (
     <div className='login-page'>
-      <h1>Fitness-Tracker</h1>
       <div className='login-container'>
         <input className='username-input' ref={usernameInputRef} type="text" placeholder='Username...' />
         <input className='password-input' ref={passwordInputRef} type="password" placeholder='Password...' />

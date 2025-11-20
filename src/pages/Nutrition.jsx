@@ -156,19 +156,19 @@ const Nutrition = () => {
                   {
                     data: sampleDataWithMacros.map(item => item.protein * 4),
                     stack: 'calories',
-                    color: '#FF6B6B',
+                    color: '#758A93',
                     label: 'Protein'
                   },
                   {
                     data: sampleDataWithMacros.map(item => item.carbs * 4),
                     stack: 'calories',
-                    color: '#4ECDC4',
+                    color: '#EFA00B',
                     label: 'Carbs'
                   },
                   {
                     data: sampleDataWithMacros.map(item => item.fat * 9),
                     stack: 'calories',
-                    color: '#45B7D1',
+                    color: '#D65108',
                     label: 'Fat'
                   }
                 ]}
