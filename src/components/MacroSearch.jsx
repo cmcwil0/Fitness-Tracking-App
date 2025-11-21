@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import classes from '../css/MacroSearch.module.css';
+import { isLoggedIn, authHeaders } from '../utils/auth';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
@@ -20,14 +21,23 @@ const MacroSearch = ({ onFocus, onBlur, onPlus, onMinus, onDelete }) => {
   const [foods, setFoods] = useState([]);
   const [error, setError] = useState(null);
 
+  const loggedIn = isLoggedIn();
   const debounced = useDebounce(search, 400);
 
   useEffect(() => {
+    if (!loggedIn) {
+      setFoods([]);
+      setError(null);
+      return;
+    }
+
     const q = debounced.trim();
     if (!q) { setFoods([]); setError(null); return; }
     setError(null);
 
-    fetch(`${API}/api/nutrition?query=${encodeURIComponent(q)}`)
+    fetch(`${API}/api/nutrition?query=${encodeURIComponent(q)}`, {
+      headers: authHeaders(),
+    })
       .then(async (r) => {
         if (!r.ok) throw new Error(await r.text());
         return r.json();
@@ -45,7 +55,7 @@ const MacroSearch = ({ onFocus, onBlur, onPlus, onMinus, onDelete }) => {
         setFoods(mapped);
       })
       .catch(() => setError('Nutrition lookup failed'));
-  }, [debounced]);
+  }, [debounced, loggedIn]);
 
   const filteredFoods = foods.filter(item =>
     item.name.toLowerCase().includes(search.toLowerCase())
@@ -56,16 +66,18 @@ const MacroSearch = ({ onFocus, onBlur, onPlus, onMinus, onDelete }) => {
       <form className={classes.searchFood}>
         <input
           type="text"
-          placeholder="search for meal..."
+          placeholder={loggedIn ? 'search for meal...' : 'Sign in to search for meals…'}
           value={search}
           onChange={e => setSearch(e.target.value)}
           onFocus={onFocus}
           onBlur={onBlur}
+          disabled={!loggedIn}
+          title={!loggedIn ? 'Please sign in to search' : undefined}
         />
         {error && <div style={{ fontSize: 12, marginTop: 6 }}>{error}</div>}
 
         <ul className={classes.foodsList}>
-          {search !== '' && filteredFoods.map(item => (
+          {loggedIn && search !== '' && filteredFoods.map(item => (
             <li key={item.id}>
               <div className={classes.mainInfo}>
                 <span className={classes.itemName}>{item.name}</span>
@@ -92,6 +104,7 @@ const MacroSearch = ({ onFocus, onBlur, onPlus, onMinus, onDelete }) => {
                   −
                 </button>
 
+                {}
                 <button
                   className={classes.addFoodButton}
                   type="button"
@@ -102,6 +115,7 @@ const MacroSearch = ({ onFocus, onBlur, onPlus, onMinus, onDelete }) => {
                   +
                 </button>
 
+                {}
                 <button
                   className={classes.infoButton}
                   type="button"

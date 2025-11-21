@@ -1,89 +1,129 @@
-import classes from '../css/FitnessSearch.module.css'
+import { useEffect, useMemo, useState } from 'react';
+import classes from '../css/FitnessSearch.module.css';
+import { isLoggedIn, authHeaders } from '../utils/auth';
 
+const API = import.meta.env?.VITE_API_URL || 'http://localhost:4000';
 
-const exampleWorkouts = [
-  {
-    id: 1,
-    name: "Push-ups",
-    shortDescription: "Upper body strength exercise",
-    longDescription: "A classic bodyweight exercise that targets the chest, shoulders, triceps, and core. Start in a plank position with hands shoulder-width apart, lower your body until your chest nearly touches the floor, then push back up to starting position. Great for building upper body strength and can be modified for different fitness levels."
-  },
-  {
-    id: 2,
-    name: "Squats",
-    shortDescription: "Lower body compound movement",
-    longDescription: "A fundamental lower body exercise that works the quadriceps, hamstrings, glutes, and core. Stand with feet shoulder-width apart, lower your body as if sitting in a chair, keeping your chest up and knees behind your toes, then return to standing. Essential for building leg strength and improving functional movement."
-  },
-  {
-    id: 3,
-    name: "Burpees",
-    shortDescription: "Full-body cardio exercise",
-    longDescription: "A high-intensity exercise that combines a squat, plank, push-up, and jump. Start standing, drop into a squat, kick back into plank, do a push-up, jump feet back to squat, then jump up with arms overhead. Excellent for cardiovascular fitness and full-body conditioning."
-  },
-  {
-    id: 4,
-    name: "Mountain Climbers",
-    shortDescription: "Dynamic core and cardio",
-    longDescription: "A fast-paced exercise that targets the core, shoulders, and legs while providing cardiovascular benefits. Start in a plank position and alternate bringing knees to chest in a running motion. Keep your core engaged and maintain a steady rhythm for maximum effectiveness."
-  },
-  {
-    id: 5,
-    name: "Deadlifts",
-    shortDescription: "Posterior chain strength",
-    longDescription: "A compound exercise that primarily targets the hamstrings, glutes, lower back, and traps. Stand with feet hip-width apart, hinge at the hips to lower the weight while keeping your back straight, then drive through your heels to return to standing. One of the best exercises for overall strength and power development."
-  },
-  {
-    id: 6,
-    name: "Plank",
-    shortDescription: "Core stability exercise",
-    longDescription: "An isometric exercise that strengthens the entire core, shoulders, and glutes. Hold a push-up position with forearms on the ground, maintaining a straight line from head to heels. Focus on keeping your core tight and breathing steadily. Excellent for building core stability and endurance."
-  },
-  {
-    id: 7,
-    name: "Jumping Jacks",
-    shortDescription: "Cardio warm-up exercise",
-    longDescription: "A simple but effective cardiovascular exercise that also works the legs and shoulders. Start with feet together and arms at sides, jump while spreading legs shoulder-width apart and raising arms overhead, then return to starting position. Perfect for warming up or adding cardio to any workout."
-  },
-  {
-    id: 8,
-    name: "Lunges",
-    shortDescription: "Unilateral leg exercise",
-    longDescription: "A single-leg exercise that targets the quadriceps, hamstrings, glutes, and improves balance. Step forward with one leg, lowering your hips until both knees are bent at 90 degrees, then push back to starting position. Helps correct muscle imbalances and improves functional movement patterns."
-  },
-  {
-    id: 9,
-    name: "Pull-ups",
-    shortDescription: "Upper body pulling exercise",
-    longDescription: "A challenging upper body exercise that targets the latissimus dorsi, rhomboids, biceps, and core. Hang from a pull-up bar with palms facing away, pull your body up until your chin clears the bar, then lower with control. Excellent for building back strength and improving grip strength."
-  },
-  {
-    id: 10,
-    name: "High Knees",
-    shortDescription: "Dynamic cardio movement",
-    longDescription: "A high-intensity cardio exercise that involves running in place while bringing knees up toward chest. Keep your core engaged and pump your arms as you alternate lifting each knee as high as possible. Great for improving cardiovascular fitness, leg strength, and coordination."
-  }
+const useDebounce = (value, delay = 400) => {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+};
+
+const fallbackItems = [
+  { id: 'fallback-pushups', name: 'Push-ups', muscle: 'chest', type: 'strength', difficulty: 'beginner', equipment: 'body only', instructions: 'Standard grip push ups.' },
+  { id: 'fallback-chest-press', name: 'Chest Press', muscle: 'chest', type: 'strength', difficulty: 'intermediate', equipment: 'barbell', instructions: 'Barbell chest press.' },
 ];
 
+export default function FitnessSearch({ addMovementFunction, onInfo }) {
+  const [q, setQ] = useState('');
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('');
+  const debounced = useDebounce(q, 450);
+  const loggedIn = isLoggedIn();
 
-const FitnessSearch = ({addMovementFunction}) => {
+  useEffect(() => {
+    if (!loggedIn) { setItems([]); setErr(''); return; }
+
+    const name = (debounced || '').trim();
+    if (!name) { setItems([]); setErr(''); return; }
+
+    (async () => {
+      try {
+        setLoading(true);
+        setErr('');
+        const r = await fetch(`${API}/api/exercises?name=${encodeURIComponent(name)}&limit=25`, {
+          headers: authHeaders(),
+        });
+        if (!r.ok) throw new Error(await r.text());
+
+        const { items: raw = [] } = await r.json();
+        const mapped = raw.map((it, i) => ({
+          id: `${it.name}-${it.muscle || 'na'}-${i}`,
+          name: it.name,
+          muscle: it.muscle || '',
+          type: it.type || '',
+          equipment: it.equipment || '',
+          difficulty: it.difficulty || '',
+          instructions: it.instructions || '',
+        }));
+        setItems(mapped);
+      } catch {
+        setErr('Exercise lookup failed — showing a small example list.');
+        setItems(fallbackItems);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [debounced, loggedIn]);
+
+  const list = useMemo(() => items, [items]);
+
+  const handleAdd = (item) => {
+    if (typeof addMovementFunction === 'function') addMovementFunction(item);
+  };
+
+  const handleInfo = (item) => {
+    if (typeof onInfo === 'function') return onInfo(item);
+    alert(
+      `${item.name}\n\nMuscle: ${item.muscle}\nType: ${item.type}\nEquipment: ${item.equipment}\nDifficulty: ${item.difficulty}\n\n${item.instructions}`
+    );
+  };
+
+  const addFirstOnEnter = (e) => {
+    if (!loggedIn) return;
+    if (e.key === 'Enter' && list.length) {
+      e.preventDefault();
+      handleAdd(list[0]);
+    }
+  };
+
   return (
     <div className={classes.fitnessSearchContainer}>
-      <input className={classes.searchBar} type="text" placeholder='Search Movement...' />
+      <input
+        className={classes.searchBar}
+        type="text"
+        placeholder={loggedIn ? 'Search Movement...' : 'Sign in to search movements…'}
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        onKeyDown={addFirstOnEnter}
+        disabled={!loggedIn}
+        title={!loggedIn ? 'Please sign in to search' : undefined}
+      />
+
+      {loading && <div style={{ fontSize: 12, opacity: .8, marginTop: 6 }}>Searching…</div>}
+      {!!err && !loading && <div style={{ fontSize: 12, opacity: .8, marginTop: 6 }}>{err}</div>}
+
       <ul className={classes.searchResults}>
-        {
-          exampleWorkouts.map(workout => (
-            <li className={classes.searchResultCard} key={workout.id}>
-                <div className={classes.workoutName}>{workout.name}</div>
-                <div className={classes.cardButtons}>
-                    <div className={classes.infoButton}><svg xmlns="http://www.w3.org/2000/svg" width='15px' height='15px' fill='var(--accent-color)' viewBox="0 0 192 512"><path d="M48 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM0 192c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 256 32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-224-32 0c-17.7 0-32-14.3-32-32z"/></svg></div>
-                    <div className={classes.addWorkoutButton} onClick={() => addMovementFunction}><svg xmlns="http://www.w3.org/2000/svg" width='15px' height='15px' fill='var(--accent-color)' viewBox="0 0 448 512"><path d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"/></svg></div>
-                </div>
-            </li>
-          ))
-        }
+        {loggedIn && list.map((workout) => (
+          <li className={classes.searchResultCard} key={workout.id}>
+            <div className={classes.workoutName}>{workout.name}</div>
+            <div className={classes.cardButtons}>
+              <button
+                type="button"
+                className={classes.infoButton}
+                onClick={() => handleInfo(workout)}
+                title="Details"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="var(--accent-color)" viewBox="0 0 192 512"><path d="M48 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM0 192c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 256 32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 512c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-224-32 0c-17.7 0-32-14.3-32-32z"/></svg>
+              </button>
+
+              <button
+                type="button"
+                className={classes.addWorkoutButton}
+                onClick={() => handleAdd(workout)}
+                title="Add"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="var(--accent-color)" viewBox="0 0 448 512"><path d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"/></svg>
+              </button>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
-  )
+  );
 }
-
-export default FitnessSearch
