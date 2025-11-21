@@ -15,19 +15,16 @@ const useDebounce = (value, delay = 400) => {
 const round = (n) => (typeof n === 'number' ? Math.round(n) : 0);
 const titleCase = (s = '') => s.charAt(0).toUpperCase() + s.slice(1);
 
-const MacroSearch = ({onFocus, onBlur, onAddFood}) => {
-    const [search, setSearch] = useState('');
-    const [foods, setFoods] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+const MacroSearch = ({ onFocus, onBlur, onPlus, onMinus, onDelete }) => {
+  const [search, setSearch] = useState('');
+  const [foods, setFoods] = useState([]);
+  const [error, setError] = useState(null);
 
   const debounced = useDebounce(search, 400);
 
   useEffect(() => {
     const q = debounced.trim();
     if (!q) { setFoods([]); setError(null); return; }
-
-    setLoading(true);
     setError(null);
 
     fetch(`${API}/api/nutrition?query=${encodeURIComponent(q)}`)
@@ -47,8 +44,7 @@ const MacroSearch = ({onFocus, onBlur, onAddFood}) => {
         }));
         setFoods(mapped);
       })
-      .catch(() => setError('Nutrition lookup failed'))
-      .finally(() => setLoading(false));
+      .catch(() => setError('Nutrition lookup failed'));
   }, [debounced]);
 
   const filteredFoods = foods.filter(item =>
@@ -85,17 +81,36 @@ const MacroSearch = ({onFocus, onBlur, onAddFood}) => {
                   {item.carbs}g C · {item.protein}g P · {item.fat}g F
                 </span>
 
+                {}
                 <button
                   className={classes.infoButton}
                   type="button"
-                >?</button>
+                  onMouseDown={e => e.preventDefault()}
+                  onClick={() => onMinus?.(item)}
+                  title="Remove one"
+                >
+                  −
+                </button>
 
                 <button
                   className={classes.addFoodButton}
                   type="button"
-                  onMouseDown={e => e.preventDefault()} 
-                  onClick={() => onAddFood?.(item)}
-                >+</button>
+                  onMouseDown={e => e.preventDefault()}
+                  onClick={() => onPlus?.(item)}
+                  title="Add one"
+                >
+                  +
+                </button>
+
+                <button
+                  className={classes.infoButton}
+                  type="button"
+                  onMouseDown={e => e.preventDefault()}
+                  onClick={() => onDelete?.(item)}
+                  title="Delete"
+                >
+                  🗑
+                </button>
               </div>
             </li>
           ))}

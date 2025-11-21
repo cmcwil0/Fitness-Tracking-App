@@ -23,3 +23,20 @@ CREATE TABLE IF NOT EXISTS goals (
     FOREIGN KEY (user_id) REFERENCES users(id)
     ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS diary_entries (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  entry_date DATE NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  calories INT NOT NULL,
+  protein INT NOT NULL,
+  carbs INT NOT NULL,
+  fat INT NOT NULL,
+  quantity INT NOT NULL DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_diary_user
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  UNIQUE KEY uniq_user_date_name (user_id, entry_date, name)
+);
