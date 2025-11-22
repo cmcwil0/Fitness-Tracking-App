@@ -2,7 +2,6 @@ import { Router } from 'express';
 
 const router = Router();
 
-// GET /api/exercises?name=...&muscle=...&type=...&equipment=...
 router.get('/', async (req, res) => {
   try {
     const key = process.env.API_NINJAS_KEY;

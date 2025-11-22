@@ -1,11 +1,9 @@
-// client/src/components/FitnessSearch.jsx
 import { useEffect, useMemo, useState } from 'react';
 import classes from '../css/FitnessSearch.module.css';
 import { isLoggedIn, authHeaders } from '../utils/auth';
 
 const API = import.meta.env?.VITE_API_URL || 'http://localhost:4000';
 
-// tiny debounce util
 const useDebounce = (value, delay = 400) => {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -15,7 +13,6 @@ const useDebounce = (value, delay = 400) => {
   return debounced;
 };
 
-// fallback if API has an issue (keeps UI usable)
 const fallbackItems = [
   { id: 'fallback-pushups', name: 'Push-ups', muscle: 'chest', type: 'strength', difficulty: 'beginner', equipment: 'body only', instructions: 'Standard grip push ups.' },
   { id: 'fallback-chest-press', name: 'Chest Press', muscle: 'chest', type: 'strength', difficulty: 'intermediate', equipment: 'barbell', instructions: 'Barbell chest press.' },

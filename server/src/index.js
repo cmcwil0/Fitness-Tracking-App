@@ -14,14 +14,12 @@ const app = express();
 app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
 app.use(express.json());
 
-// Single, consistent auth middleware
 function requireAuth(req, res, next) {
   const auth = req.headers.authorization || '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
   if (!token) return res.status(401).json({ error: 'Unauthorized' });
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET || 'devsecret');
-    // All routes (goals/diary/etc) expect req.user.id
     req.user = {
       id: payload.id || payload.userId,
       username: payload.username,
