@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 
 const router = Router();
 
-router.get('/nutrition', async (req, res) => {
+router.get('/', async (req, res) => {
   const q = (req.query.query || '').trim();
   if (!q) return res.status(400).json({ message: 'query is required' });
 

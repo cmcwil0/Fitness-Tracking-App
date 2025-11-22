@@ -1,30 +1,53 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import authRoutes from './routes/auth.js';
-import nutritionRoutes from './routes/nutrition.js';
-import goalsRoutes from './routes/goals.js';
-import diaryRoutes from './routes/diary.js';
-import requireAuth from './middleware/requireAuth.js';
+import jwt from 'jsonwebtoken';
+
+import authRouter from './routes/auth.js';
+import goalsRouter from './routes/goals.js';
+import diaryRouter from './routes/diary.js';
+import nutritionRouter from './routes/nutrition.js';
+import exercisesRouter from './routes/exercises.js';
 
 const app = express();
 
 app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
 app.use(express.json());
 
+// Single, consistent auth middleware
+function requireAuth(req, res, next) {
+  const auth = req.headers.authorization || '';
+  const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET || 'devsecret');
+    // All routes (goals/diary/etc) expect req.user.id
+    req.user = {
+      id: payload.id || payload.userId,
+      username: payload.username,
+      role: payload.role
+    };
+    next();
+  } catch {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+}
+
+// Public health-check
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 
-app.use('/api/auth', authRoutes);
+// Routes
+app.use('/api/auth', authRouter);
+app.use('/api/goals', requireAuth, goalsRouter);
+app.use('/api/diary', requireAuth, diaryRouter);
+app.use('/api/nutrition', nutritionRouter);
+app.use('/api/exercises', requireAuth, exercisesRouter);
 
-app.get('/api/auth/me', requireAuth, (req, res) => {
-  res.json({ user: req.user });
+// Safety net so curl never sees "Empty reply from server"
+app.use((err, _req, res, _next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ error: 'Server error' });
 });
-
-app.use('/api', nutritionRoutes);
-
-app.use('/api/goals', requireAuth, goalsRoutes);
-
-app.use('/api/diary', requireAuth, diaryRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`API listening on ${PORT}`));
