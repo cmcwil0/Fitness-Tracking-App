@@ -16,20 +16,22 @@ const sampleDataWithMacros = [
   { day: 'Thursday', calories: 3000, protein: 150, carbs: 375, fat: 105 },
   { day: 'Friday', calories: 2600, protein: 130, carbs: 325, fat: 85 },
   { day: 'Saturday', calories: 2900, protein: 145, carbs: 362, fat: 98 },
-  { day: 'Sunday', calories: 2500, protein: 125, carbs: 312, fat: 83 }
+  { day: 'Sunday', calories: 2500, protein: 125, carbs: 312, fat: 83 },
 ];
 
 const rnd = (n) => (typeof n === 'number' ? Math.round(n) : 0);
 
 const QtyBadge = ({ q }) => (
-  <span style={{
-    fontSize: 12,
-    opacity: 0.85,
-    marginRight: 8,
-    padding: '1px 6px',
-    borderRadius: 8,
-    border: '1px solid var(--border-color, #444)'
-  }}>
+  <span
+    style={{
+      fontSize: 12,
+      opacity: 0.85,
+      marginRight: 8,
+      padding: '1px 6px',
+      borderRadius: 8,
+      border: '1px solid var(--border-color, #444)',
+    }}
+  >
     x{q}
   </span>
 );
@@ -53,13 +55,18 @@ const Nutrition = () => {
   const [calorieTarget, setCalorieTarget] = useState(2800);
 
   const [diary, setDiary] = useState([]);
-  const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const todayStr = useMemo(
+    () => new Date().toISOString().slice(0, 10),
+    []
+  );
 
   useEffect(() => {
     if (!isLoggedIn()) return;
     (async () => {
       try {
-        const r = await fetch(`${API}/api/goals/me`, { headers: authHeaders() });
+        const r = await fetch(`${API}/api/goals/me`, {
+          headers: authHeaders(),
+        });
         if (!r.ok) return;
         const data = await r.json();
         if (data && typeof data.calorie_target === 'number') {
@@ -72,22 +79,26 @@ const Nutrition = () => {
   async function loadDiary() {
     if (!isLoggedIn()) return setDiary([]);
     try {
-      const r = await fetch(`${API}/api/diary/today`, { headers: authHeaders() });
+      const r = await fetch(`${API}/api/diary/today`, {
+        headers: authHeaders(),
+      });
       const data = await r.json();
       if (r.ok && Array.isArray(data.items)) setDiary(data.items);
     } catch {}
   }
 
-  useEffect(() => { loadDiary(); }, []);
+  useEffect(() => {
+    loadDiary();
+  }, []);
 
   const totals = useMemo(() => {
     return diary.reduce(
       (acc, it) => {
         const q = Number(it.quantity) || 0;
         acc.calories += (Number(it.calories) || 0) * q;
-        acc.protein  += (Number(it.protein)  || 0) * q;
-        acc.carbs    += (Number(it.carbs)    || 0) * q;
-        acc.fat      += (Number(it.fat)      || 0) * q;
+        acc.protein += (Number(it.protein) || 0) * q;
+        acc.carbs += (Number(it.carbs) || 0) * q;
+        acc.fat += (Number(it.fat) || 0) * q;
         return acc;
       },
       { calories: 0, protein: 0, carbs: 0, fat: 0 }
@@ -95,9 +106,9 @@ const Nutrition = () => {
   }, [diary]);
 
   const calorieCount = totals.calories;
-  const carbCount    = totals.carbs;
+  const carbCount = totals.carbs;
   const proteinCount = totals.protein;
-  const fatCount     = totals.fat;
+  const fatCount = totals.fat;
 
   async function changeQty(item, delta) {
     if (!isLoggedIn()) {
@@ -112,12 +123,15 @@ const Nutrition = () => {
         calories: item.calories,
         protein: item.protein,
         carbs: item.carbs,
-        fat: item.fat
+        fat: item.fat,
       };
       const r = await fetch(`${API}/api/diary/qty`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', ...authHeaders() },
-        body: JSON.stringify(body)
+        headers: {
+          'Content-Type': 'application/json',
+          ...authHeaders(),
+        },
+        body: JSON.stringify(body),
       });
       if (!r.ok) {
         const e = await r.json().catch(() => ({}));
@@ -135,8 +149,11 @@ const Nutrition = () => {
     try {
       const r = await fetch(`${API}/api/diary/item`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json', ...authHeaders() },
-        body: JSON.stringify({ date: todayStr, name })
+        headers: {
+          'Content-Type': 'application/json',
+          ...authHeaders(),
+        },
+        body: JSON.stringify({ date: todayStr, name }),
       });
       if (!r.ok) throw new Error('Failed to delete item');
       const data = await r.json();
@@ -150,10 +167,15 @@ const Nutrition = () => {
   const handleSearchMinus = (food) => changeQty(food, -1);
   const handleSearchDelete = (food) => deleteItem(food.name);
 
-  return (
-    <div className={`${classes.nutritionPage}`}>
-      <div className={`${classes.nutritionContainer}`}>
+  const diaryButtonStyle = {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'var(--accent-color)',
+    color: 'var(--accent-color)',
+  };
 
+  return (
+    <div className={classes.nutritionPage}>
+      <div className={classes.nutritionContainer}>
         {isSearchFocused === false && (
           <>
             <div className={classes.dateLabel}>{getCurrentDate()}</div>
@@ -167,7 +189,7 @@ const Nutrition = () => {
               />
             </div>
 
-            <div className={`${classes.cpfContainer}`}>
+            <div className={classes.cpfContainer}>
               <div className={classes.carbCount}>
                 <div>{`${rnd(carbCount)}g`}</div>
                 <label>Carbohydrates</label>
@@ -184,7 +206,6 @@ const Nutrition = () => {
           </>
         )}
 
-        {}
         <MacroSearch
           onFocus={() => setIsSearchFocused(true)}
           onBlur={() => setIsSearchFocused(false)}
@@ -193,8 +214,13 @@ const Nutrition = () => {
           onDelete={handleSearchDelete}
         />
 
-        {}
-        <div style={{ marginTop: 8, maxHeight: 180, overflowY: 'auto' }}>
+        <div
+          style={{
+            marginTop: 8,
+            maxHeight: 180,
+            overflowY: 'auto',
+          }}
+        >
           <ul className={classes.foodsList}>
             {diary.map((it) => (
               <li key={`${it.name}-${it.id || it.entry_date}`}>
@@ -205,11 +231,19 @@ const Nutrition = () => {
 
                 <div className={classes.subInfo}>
                   <span className={classes.itemCalories}>
-                    {rnd(it.calories)}<span>kcal</span>
+                    {rnd(it.calories)}
+                    <span>kcal</span>
                   </span>
 
-                  <span style={{ fontSize: 12, opacity: 0.85, marginRight: 8 }}>
-                    {rnd(it.carbs)}g C · {rnd(it.protein)}g P · {rnd(it.fat)}g F
+                  <span
+                    style={{
+                      fontSize: 12,
+                      opacity: 0.85,
+                      marginRight: 8,
+                    }}
+                  >
+                    {rnd(it.carbs)}g C · {rnd(it.protein)}g P ·{' '}
+                    {rnd(it.fat)}g F
                   </span>
 
                   <QtyBadge q={it.quantity} />
@@ -218,23 +252,37 @@ const Nutrition = () => {
                   <button
                     className={classes.infoButton}
                     type="button"
+                    style={diaryButtonStyle}
+                    onMouseDown={(e) => e.preventDefault()}
                     onClick={() => changeQty(it, -1)}
                     title="Remove one"
-                  >−</button>
+                  >
+                    −
+                  </button>
 
+                  {}
                   <button
                     className={classes.addFoodButton}
                     type="button"
+                    style={diaryButtonStyle}
+                    onMouseDown={(e) => e.preventDefault()}
                     onClick={() => changeQty(it, +1)}
                     title="Add one"
-                  >+</button>
+                  >
+                    +
+                  </button>
 
+                  {}
                   <button
                     className={classes.infoButton}
                     type="button"
+                    style={diaryButtonStyle}
+                    onMouseDown={(e) => e.preventDefault()}
                     onClick={() => deleteItem(it.name)}
                     title="Delete"
-                  >🗑</button>
+                  >
+                    🗑
+                  </button>
                 </div>
               </li>
             ))}
@@ -248,18 +296,43 @@ const Nutrition = () => {
               height={250}
               borderRadius={10}
               series={[
-                { data: sampleDataWithMacros.map(i => i.protein * 4), stack: 'calories', color: '#FF6B6B', label: 'Protein' },
-                { data: sampleDataWithMacros.map(i => i.carbs * 4),   stack: 'calories', color: '#4ECDC4', label: 'Carbs' },
-                { data: sampleDataWithMacros.map(i => i.fat * 9),     stack: 'calories', color: '#45B7D1', label: 'Fat' }
+                {
+                  data: sampleDataWithMacros.map((i) => i.protein * 4),
+                  stack: 'calories',
+                  color: '#FF6B6B',
+                  label: 'Protein',
+                },
+                {
+                  data: sampleDataWithMacros.map((i) => i.carbs * 4),
+                  stack: 'calories',
+                  color: '#4ECDC4',
+                  label: 'Carbs',
+                },
+                {
+                  data: sampleDataWithMacros.map((i) => i.fat * 9),
+                  stack: 'calories',
+                  color: '#45B7D1',
+                  label: 'Fat',
+                },
               ]}
-              xAxis={[{
-                data: sampleDataWithMacros.map(i => i.day.slice(0, 3)),
-                scaleType: 'band',
-                disableLine: true,
-                disableTicks: true,
-                tickLabelStyle: { fill: 'var(--accent-color)' }
-              }]}
-              yAxis={[{ disableLine: true, disableTicks: true, tickLabelStyle: { display: 'none' } }]}
+              xAxis={[
+                {
+                  data: sampleDataWithMacros.map((i) =>
+                    i.day.slice(0, 3)
+                  ),
+                  scaleType: 'band',
+                  disableLine: true,
+                  disableTicks: true,
+                  tickLabelStyle: { fill: 'var(--accent-color)' },
+                },
+              ]}
+              yAxis={[
+                {
+                  disableLine: true,
+                  disableTicks: true,
+                  tickLabelStyle: { display: 'none' },
+                },
+              ]}
               slotProps={{ legend: { hidden: true } }}
               margin={{ left: 0, right: 50, bottom: 50 }}
               hideLegend

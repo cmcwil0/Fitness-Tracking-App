@@ -113,7 +113,7 @@ const Dashboard = () => {
     <div className={`${classes.dashboardPage} ${classes.card}`}>
       <div className={`${classes.dashboardContainer} ${classes.card}`}>
 
-        {/* LEFT CARD: keep exact container classes; only inner content shows the circle */}
+        {}
         <div className={`${classes.nutritionContainer} ${classes.card}`}>
           <div style={{ width: '55%', margin: '0 auto' }}>
             <CircularProgressbar
@@ -125,13 +125,20 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {}
         <div className={`${classes.workoutContainer} ${classes.card}`}>
           <div className={classes.scheduledToday}>
             <TodaysSchedule />
           </div>
-          <div className={classes.fitnessCircleWrapper}>
+
+          {}
+          <NavLink
+            to="/fitness"
+            className={classes.fitnessCircleWrapper}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
             <FitnessCircle />
-          </div>
+          </NavLink>
         </div>
 
         <div className={`${classes.card} ${classes.weeklyGoalsCard}`}>

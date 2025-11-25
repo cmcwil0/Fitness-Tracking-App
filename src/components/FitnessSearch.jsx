@@ -87,7 +87,7 @@ export default function FitnessSearch({ addMovementFunction, onInfo }) {
       <input
         className={classes.searchBar}
         type="text"
-        placeholder={loggedIn ? 'Search Movement...' : 'Sign in to search movements…'}
+        placeholder={loggedIn ? 'Search Movement...' : 'Sign in to search workouts…'}
         value={q}
         onChange={(e) => setQ(e.target.value)}
         onKeyDown={addFirstOnEnter}
