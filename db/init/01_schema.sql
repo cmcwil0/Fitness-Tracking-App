@@ -40,3 +40,22 @@ CREATE TABLE IF NOT EXISTS diary_entries (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   UNIQUE KEY uniq_user_date_name (user_id, entry_date, name)
 );
+
+CREATE TABLE IF NOT EXISTS workouts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  workout_type VARCHAR(50),
+  preset VARCHAR(100),
+  duration_hours INT DEFAULT 0,
+  duration_minutes INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS workout_exercises (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  workout_id INT NOT NULL,
+  name VARCHAR(255),
+  description VARCHAR(500),
+  FOREIGN KEY (workout_id) REFERENCES workouts(id) ON DELETE CASCADE
+);

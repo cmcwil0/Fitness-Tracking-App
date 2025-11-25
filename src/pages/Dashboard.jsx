@@ -25,7 +25,6 @@ const Dashboard = () => {
   const [username, setUsername] = useState('Name')
   const [streak, setStreak] = useState('num')
 
-  /* goal + today calories for the circle */
   const [calorieTarget, setCalorieTarget] = useState(0)
   const [todayCalories, setTodayCalories] = useState(0)
 
@@ -36,7 +35,7 @@ const Dashboard = () => {
         const u = JSON.parse(cached)
         if (u?.username) setUsername(u.username)
       }
-    } catch { /* ignore parse errors */ }
+    } catch {}
 
     const token = localStorage.getItem('token')
     if (token) {
@@ -52,7 +51,6 @@ const Dashboard = () => {
     }
   }, [])
 
-  // tolerant extractor for /api/diary/today JSON shapes
   const extractCalories = (payload) => {
     if (!payload) return 0
     if (typeof payload.calories === 'number') return payload.calories
@@ -68,7 +66,6 @@ const Dashboard = () => {
     return 0
   }
 
-  /* load goal + today totals, and refresh when Nutrition updates */
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (!token) return
@@ -91,14 +88,12 @@ const Dashboard = () => {
           setTodayCalories(extractCalories(d))
         }
       } catch {
-        /* ignore network/parse errors */
       }
     }
 
     load()
 
     const onChanged = (e) => {
-      // if Nutrition.jsx sent totals, use them; otherwise re-fetch
       if (e?.detail?.calories != null) {
         setTodayCalories(Number(e.detail.calories) || 0)
       } else {
