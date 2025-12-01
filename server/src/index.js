@@ -11,7 +11,18 @@ import workoutsRouter from "./routes/workouts.js";
 
 const app = express();
 
-app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
+const allowedOrigins = [
+  'http://localhost:5173',          // local dev
+  'https://www.fittrack.live',      // production
+  'https://fittrack.live',          
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 function requireAuth(req, res, next) {
