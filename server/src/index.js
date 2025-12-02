@@ -12,17 +12,24 @@ import workoutsRouter from "./routes/workouts.js";
 const app = express();
 
 const allowedOrigins = [
-  'http://localhost:5173',          // local dev
-  'https://www.fittrack.live',      // production
-  'https://fittrack.live',          
+  'http://localhost:5173',
+  'https://www.fittrack.live',
+  'https://fittrack.live',
 ];
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      // Allow tools like curl/postman (no Origin) and our whitelisted frontend
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 function requireAuth(req, res, next) {
