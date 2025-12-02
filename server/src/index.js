@@ -11,8 +11,19 @@ const app = express();
 
 // --- CORS SETUP ---
 // Build allowed origins from environment variable (comma-separated) and defaults
+const isValidOrigin = (origin) => {
+  try {
+    const url = new URL(origin);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
 const envOrigins = process.env.CORS_ORIGINS
-  ? process.env.CORS_ORIGINS.split(',').map(o => o.trim()).filter(Boolean)
+  ? process.env.CORS_ORIGINS.split(',')
+      .map(o => o.trim())
+      .filter(o => o && isValidOrigin(o))
   : [];
 
 const allowedOrigins = [
