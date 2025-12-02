@@ -1,7 +1,5 @@
 import 'dotenv/config';
 import express from 'express';
-import cors from 'cors';
-import jwt from 'jsonwebtoken';
 import authRouter from './routes/auth.js';
 import goalsRouter from './routes/goals.js';
 import diaryRouter from './routes/diary.js';
@@ -12,10 +10,16 @@ import workoutsRouter from './routes/workouts.js';
 const app = express();
 
 // --- CORS SETUP ---
+// Build allowed origins from environment variable (comma-separated) and defaults
+const envOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',').map(o => o.trim()).filter(Boolean)
+  : [];
+
 const allowedOrigins = [
   'http://localhost:5173',
   'https://www.fittrack.live',
   'https://fittrack.live',
+  ...envOrigins,
 ];
 
 app.use((req, res, next) => {
@@ -66,4 +70,5 @@ app.get('/health', (req, res) => {
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`API listening on port ${PORT}`);
+  console.log('Allowed CORS origins:', allowedOrigins);
 });
