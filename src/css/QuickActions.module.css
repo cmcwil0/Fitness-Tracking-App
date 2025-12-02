@@ -25,31 +25,29 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--secondary-color);
-  border-radius: 12px;
   padding: 16px;
   text-decoration: none;
   color: var(--accent-color);
   transition: all 0.2s ease;
-  border: 2px solid transparent;
 }
 
 .actionButton:hover {
   transform: translateY(-2px);
-  border-color: var(--action-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.actionButton:hover .actionIcon svg {
+  transform: scale(1.1);
 }
 
 .actionIcon {
-  width: 40px;
-  height: 40px;
-  background: var(--action-color);
-  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  color: white;
+}
+
+.actionIcon svg {
+  fill: var(--action-color);
+  transition: transform 0.2s ease;
 }
 
 .actionTitle {

@@ -10,14 +10,13 @@
 }
 
 .dashboardContainer {
-    height: 85%;
-    width: 85%;
+    height: 800px;
+    width: 1400px;
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    max-width: 1400px;
-    max-height: 900px;
+    margin-top: 50px;
 }
 
 .dashboardContainer .card {
@@ -152,7 +151,6 @@
     left: 7px;
 }
 
-
 .streakContainer .streakLabel {
     font-weight: bold;
     font-size: 2.4rem;
@@ -162,6 +160,16 @@
     font-size: 0.8rem;
     color: var(--accent-color);
     margin-top: 8px;
+    position: absolute;
+    top: 7px;
+    font-weight: bold;
+}
+
+.streakContainer span {
+    position: absolute;
+    bottom: 25px;
+    font-size: 0.85rem;
+    opacity: 80%;
 }
 
 
@@ -177,7 +185,7 @@
 .workoutContainer {
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     gap: 20px;
     padding: 15px;
 }
@@ -187,7 +195,7 @@
     background: var(--secondary-color);
     border-radius: 10px;
     padding: 15px;
-    min-height: 200px;
+    max-height: 300px;
 }
 
 .workoutContainer .fitnessCircleWrapper {

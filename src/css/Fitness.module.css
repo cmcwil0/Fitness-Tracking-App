@@ -7,13 +7,14 @@
 }
 
 .fitnessContainer {
-    width: 40%;
-    height: 70%;
+    width: 600px;
+    height: 700px;
     border-radius: 10px;
     background: var(--primary-color);
     padding: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 20px;
 }

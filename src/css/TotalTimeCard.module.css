@@ -11,10 +11,12 @@
   align-items: center;
   gap: 8px;
   justify-content: center;
+  position: relative;
 }
 
 .icon {
-  font-size: 1.2rem;
+  position: absolute;
+  left: -50px;
 }
 
 .title {

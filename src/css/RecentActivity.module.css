@@ -56,15 +56,20 @@
 }
 
 .activityIcon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
-  color: white;
   flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.activityIcon svg {
+  fill: var(--activity-color);
+  transition: transform 0.2s ease;
+}
+
+.activityItem:hover .activityIcon svg {
+  transform: scale(1.1);
 }
 
 .activityContent {
