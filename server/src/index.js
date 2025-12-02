@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';           // you already use this in routes
 import authRouter from './routes/auth.js';
 import goalsRouter from './routes/goals.js';
 import diaryRouter from './routes/diary.js';
@@ -10,9 +10,10 @@ import workoutsRouter from './routes/workouts.js';
 
 const app = express();
 
-// ---------- HARDENED CORS MIDDLEWARE ----------
+// ---- CORS HANDLING (manual, so preflight is always correct) ----
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://127.0.0.1:5173',
   'https://www.fittrack.live',
   'https://fittrack.live',
 ];
@@ -20,36 +21,35 @@ const allowedOrigins = [
 app.use((req, res, next) => {
   const origin = req.headers.origin;
 
-  // For debugging – this should show up in the fitness-api logs
-  console.log('CORS check:', req.method, req.path, 'Origin:', origin);
-
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Vary', 'Origin');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
   }
 
-  res.setHeader(
+  // Let caches/proxies know response varies by Origin
+  res.header('Vary', 'Origin');
+
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET,POST,PUT,DELETE,PATCH,OPTIONS'
+  );
+  res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, PATCH, DELETE, OPTIONS'
-  );
 
+  // Short-circuit preflight requests
   if (req.method === 'OPTIONS') {
-    // This is the preflight response – it MUST include the headers above
-    return res.status(204).end();
+    return res.sendStatus(204);
   }
 
   next();
 });
 
-// ---------- JSON BODY PARSING ----------
+// ---- Body parsing ----
 app.use(express.json());
 
-// ---------- ROUTES ----------
+// ---- Routes ----
 app.use('/api/auth', authRouter);
 app.use('/api/goals', goalsRouter);
 app.use('/api/diary', diaryRouter);
@@ -57,11 +57,12 @@ app.use('/api/nutrition', nutritionRouter);
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/workouts', workoutsRouter);
 
-// OPTIONAL health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
+// Optional health-check route
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true });
 });
 
+// ---- Start server ----
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`API listening on port ${PORT}`);
