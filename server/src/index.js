@@ -34,46 +34,46 @@ const allowedOrigins = [
 ];
 
 app.use((req, res, next) => {
-  console.log('Incoming request:', req.method, req.path, 'Origin:', req.headers.origin);
-  next();
-});
-
-// Explicit CORS middleware that also handles preflight
-app.use((req, res, next) => {
   const origin = req.headers.origin;
 
+  // For debugging – this should show up in the fitness-api logs
+  console.log('CORS check:', req.method, req.path, 'Origin:', origin);
+
   if (origin && allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Vary', 'Origin'); // tells caches responses vary by Origin
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
   }
 
-  res.header(
+  res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
-  res.header(
+  res.setHeader(
     'Access-Control-Allow-Methods',
     'GET, POST, PUT, PATCH, DELETE, OPTIONS'
   );
-  res.header('Access-Control-Allow-Credentials', 'true');
 
   if (req.method === 'OPTIONS') {
-    // Preflight request – reply with 204 and CORS headers only
-    return res.sendStatus(204);
+    // This is the preflight response – it MUST include the headers above
+    return res.status(204).end();
   }
 
   next();
 });
 
+// ---------- JSON BODY PARSING ----------
 app.use(express.json());
 
-// existing routes
+// ---------- ROUTES ----------
 app.use('/api/auth', authRouter);
 app.use('/api/goals', goalsRouter);
 app.use('/api/diary', diaryRouter);
 app.use('/api/nutrition', nutritionRouter);
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/workouts', workoutsRouter);
+
+// OPTIONAL health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
