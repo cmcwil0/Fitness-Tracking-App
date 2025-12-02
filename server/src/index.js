@@ -1,6 +1,8 @@
+// src/index.js  (fitness-api)
 import 'dotenv/config';
 import express from 'express';
-import jwt from 'jsonwebtoken';           // you already use this in routes
+import cors from 'cors';
+
 import authRouter from './routes/auth.js';
 import goalsRouter from './routes/goals.js';
 import diaryRouter from './routes/diary.js';
@@ -10,46 +12,61 @@ import workoutsRouter from './routes/workouts.js';
 
 const app = express();
 
-// ---- CORS HANDLING (manual, so preflight is always correct) ----
+// --- CORS SETUP -------------------------------------------------
+
 const allowedOrigins = [
   'http://localhost:5173',
-  'http://127.0.0.1:5173',
   'https://www.fittrack.live',
   'https://fittrack.live',
 ];
 
+// Manual CORS headers so we are 100% sure they are set
 app.use((req, res, next) => {
   const origin = req.headers.origin;
 
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
+  if (!origin || allowedOrigins.includes(origin)) {
+    // reflect the allowed origin
+    if (origin) {
+      res.header('Access-Control-Allow-Origin', origin);
+    }
+    res.header('Vary', 'Origin');
     res.header('Access-Control-Allow-Credentials', 'true');
   }
 
-  // Let caches/proxies know response varies by Origin
-  res.header('Vary', 'Origin');
-
-  res.header(
-    'Access-Control-Allow-Methods',
-    'GET,POST,PUT,DELETE,PATCH,OPTIONS'
-  );
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+  );
 
-  // Short-circuit preflight requests
+  // Handle the preflight request here
   if (req.method === 'OPTIONS') {
-    return res.sendStatus(204);
+    return res.sendStatus(200);
   }
 
   next();
 });
 
-// ---- Body parsing ----
+// You can still keep cors() for good measure, it won't hurt
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+  })
+);
+
+// --- BODY PARSING -----------------------------------------------
 app.use(express.json());
 
-// ---- Routes ----
+// --- ROUTES -----------------------------------------------------
 app.use('/api/auth', authRouter);
 app.use('/api/goals', goalsRouter);
 app.use('/api/diary', diaryRouter);
@@ -57,12 +74,12 @@ app.use('/api/nutrition', nutritionRouter);
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/workouts', workoutsRouter);
 
-// Optional health-check route
-app.get('/api/health', (req, res) => {
-  res.json({ ok: true });
+// Simple health check so we can hit the API URL directly
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'fitness-api is running' });
 });
 
-// ---- Start server ----
+// --- START SERVER -----------------------------------------------
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`API listening on port ${PORT}`);
