@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "node src/index.js"
+    "start": "npx serve -s dist -l $PORT"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
