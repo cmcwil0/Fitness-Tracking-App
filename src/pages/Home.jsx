@@ -11,6 +11,7 @@ const Home = () => {
       <h1 className='main-heading'>All in One Fitness and Nutrition Tracker</h1>
       <p className='about-info'>Track your workouts, monitor your nutrition, and achieve your fitness goals all in one place. Join our community of fitness enthusiasts today!</p>
       <br></br>
+      <span></span>
       <button className='start-button'>
         {loggedIn ? (
           <Link to="/dashboard">View Dashboard</Link>
