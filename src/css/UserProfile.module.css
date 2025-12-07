@@ -7,8 +7,8 @@
 }
 
 .userProfileContainer {
-    width: 40%;
-    height: 70%;
+    width: 600px;
+    height: 700px;
     background: var(--primary-color);
     border-radius: 10px;
     padding: 20px;
@@ -30,7 +30,13 @@
     border: 2px solid var(--accent-color);
     border-radius: 50%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
 }
+
+
 
 .profilePicture .editButton {
     position: absolute;
@@ -107,4 +113,35 @@
 .profileCard .editButton {
     position: relative;
     left: 10px;
+}
+
+.otherContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottomContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.bottomContent div{
+    display: flex;
+    flex-direction: column;
+    max-width: 30%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.bottomContent button {
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 7px;
+    cursor: pointer;
+
 }

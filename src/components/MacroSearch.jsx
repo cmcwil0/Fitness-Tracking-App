@@ -101,19 +101,21 @@ const MacroSearch = ({ onFocus, onBlur, onPlus, onMinus, onDelete }) => {
         />
 
         {}
-        <input
-          type="text"
-          placeholder={
-            loggedIn
-              ? 'Quantity (e.g. 1 cup, 2 lbs, 100g)'
-              : 'Sign in to set quantity...'
-          }
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          disabled={!loggedIn}
-        />
+        {search && (
+          <input
+            type="text"
+            placeholder={
+              loggedIn
+                ? 'Quantity (e.g. 1 cup, 2 lbs, 100g)'
+                : 'Sign in to set quantity...'
+            }
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            disabled={!loggedIn}
+          />
+        )}
 
         {error && (
           <div style={{ fontSize: 12, marginTop: 6 }}>{error}</div>

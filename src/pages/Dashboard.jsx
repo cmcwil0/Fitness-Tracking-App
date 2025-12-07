@@ -115,7 +115,7 @@ const Dashboard = () => {
               value={todayCalories}
               maxValue={calorieTarget > 0 ? calorieTarget : 1}
               text={`${todayCalories}/${calorieTarget || 0}`}
-              styles={buildStyles({})}
+              styles={buildStyles({textColor: '#D65108', pathColor: '#D65108'})}
             />
           </div>
         </div>
@@ -149,7 +149,7 @@ const Dashboard = () => {
               <h2>Welcome Back {username}</h2>
               <span className={classes.dateLabel}>{getCurrentDate()}</span>
             </div>
-            <NavLink className={classes.profileContainer} to="/userprofile"></NavLink>
+            <NavLink className={classes.profileContainer} to="/userprofile"><svg xmlns="http://www.w3.org/2000/svg" width='35px' height='35px' fill='var(--accent-color)' viewBox="0 0 448 512"><path d="M224 248a120 120 0 1 0 0-240 120 120 0 1 0 0 240zm-29.7 56C95.8 304 16 383.8 16 482.3 16 498.7 29.3 512 45.7 512l356.6 0c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3l-59.4 0z"/></svg></NavLink>
           </div>
 
           <div className={classes.bottomSection}>

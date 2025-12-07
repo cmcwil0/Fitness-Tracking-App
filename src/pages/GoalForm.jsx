@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classes from '../css/GoalForm.module.css';
-import { NutritionRecommendation } from '../components/UserRecommendation';
+import { NutritionRecommendation, WorkoutRecommendation } from '../components/UserRecommendation';
 import { useNavigate } from 'react-router-dom';
 import { isLoggedIn, authHeaders } from '../utils/auth.js';
 
@@ -17,6 +17,7 @@ const GoalForm = () => {
   const [nutritionType, setNutritionType] = useState(''); //gain, gainFast, maintain, lose, loseFast
   const [editingField, setEditingField] = useState('');
   const [calorieTarget, setCalorieTarget] = useState('');
+  const [workoutRec, setWorkoutRec] = useState(null);
 
   const navigate = useNavigate();
   const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
@@ -52,7 +53,10 @@ const GoalForm = () => {
       NutritionRecommendation(height, weight, gender, age, activityLevel, nutritionType)
     );
 
+    const workout = WorkoutRecommendation(exerciseType, trainingType, activityLevel);
+
     setCalorieTarget(target);
+    setWorkoutRec(workout);
     setCurrentStep(currentStep + 1);
 
     try {
@@ -242,7 +246,22 @@ const GoalForm = () => {
             </div>
             <div className={classes.workoutRecContainer}>
               <label>Weekly Workout Target</label>
-              <span className={classes.workoutRec}></span>
+              {workoutRec && (
+                <div className={classes.workoutRec}>
+                  <div className={classes.workoutSummary}>
+                    <p><strong>{workoutRec.workoutsPerWeek}</strong> workouts per week</p>
+                    <p><strong>{workoutRec.restDays}</strong> rest days</p>
+                  </div>
+                  <div className={classes.muscleGroups}>
+                    <p><strong>Focus Areas:</strong></p>
+                    <ul>
+                      {workoutRec.muscleGroups.map((group, idx) => (
+                        <li key={idx}>{group}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         }

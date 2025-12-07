@@ -185,7 +185,7 @@ const Nutrition = () => {
                 value={calorieCount}
                 maxValue={calorieTarget}
                 text={`${calorieCount}/${calorieTarget}`}
-                styles={buildStyles({})}
+                styles={buildStyles({textColor: '#D65108', pathColor: '#D65108'})}
               />
             </div>
 
@@ -299,19 +299,19 @@ const Nutrition = () => {
                 {
                   data: sampleDataWithMacros.map((i) => i.protein * 4),
                   stack: 'calories',
-                  color: '#FF6B6B',
+                  color: '#D65108',
                   label: 'Protein',
                 },
                 {
                   data: sampleDataWithMacros.map((i) => i.carbs * 4),
                   stack: 'calories',
-                  color: '#4ECDC4',
+                  color: '#EFA00B',
                   label: 'Carbs',
                 },
                 {
                   data: sampleDataWithMacros.map((i) => i.fat * 9),
                   stack: 'calories',
-                  color: '#45B7D1',
+                  color: '#b4bbbeff',
                   label: 'Fat',
                 },
               ]}

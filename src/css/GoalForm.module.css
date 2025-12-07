@@ -9,8 +9,8 @@
 }
 
 .goalForm {
-    width: 40%;
-    height: 70%;
+    width: 600px;
+    height: 700px;
     border-radius: 10px;
     margin-top: 20px;
     display: flex;
@@ -234,7 +234,7 @@
 .step4 {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 50px;
     justify-content: center;
     align-items: center;
 }
@@ -247,9 +247,10 @@
     gap: 20px;
 }
 
-.nutritionRecContainer label{
+.nutritionRecContainer label, .workoutRecContainer label{
     font-size: large;
     font-weight: bold;
+    text-align: center;
 }
 
 .nutritionRecContainer .recDiv {
@@ -294,5 +295,21 @@
     padding: 5px;
     outline: none;
 }
+
+.workoutRecContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.workoutRec {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+
 
 

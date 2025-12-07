@@ -62,6 +62,10 @@
     margin-top: 7px;
     cursor: pointer;
     margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
 }
 
 

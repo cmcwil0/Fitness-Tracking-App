@@ -53,6 +53,67 @@ export const NutritionRecommendation = (height, weight, gender, age, activityLev
 
 }   
 
-export const WorkoutRecommendation = () => {
-    
+export const WorkoutRecommendation = (exerciseType, trainingType, activityLevel) => {
+    let workoutsPerWeek = 0;
+    let muscleGroups = [];
+    let restDays = 0;
+    let notes = '';
+
+    // Determine workouts per week based on activity level and training type
+    if (exerciseType === 'lifting') {
+        switch (trainingType) {
+            case 'strength':
+                workoutsPerWeek = activityLevel === 'heavy' || activityLevel === 'very' ? 5 : 4;
+                muscleGroups = ['Chest/Triceps', 'Back/Biceps', 'Legs', 'Shoulders', 'Full Body'];
+                restDays = 7 - workoutsPerWeek;
+                notes = 'Focus on compound movements with heavy weight and low reps (3-6 reps). Rest 3-5 minutes between sets.';
+                break;
+            case 'hypertrophy':
+                workoutsPerWeek = activityLevel === 'heavy' ? 6 : activityLevel === 'very' ? 5 : 4;
+                muscleGroups = ['Chest', 'Back', 'Legs', 'Shoulders', 'Arms', 'Core'];
+                restDays = 7 - workoutsPerWeek;
+                notes = 'Focus on moderate weight with higher volume (8-12 reps). Rest 60-90 seconds between sets.';
+                break;
+            default:
+                workoutsPerWeek = 3;
+                muscleGroups = ['Upper Body', 'Lower Body', 'Full Body'];
+                restDays = 4;
+                notes = 'Balanced approach for general fitness.';
+        }
+    } else if (exerciseType === 'cardio') {
+        switch (trainingType) {
+            case 'speed':
+                workoutsPerWeek = activityLevel === 'heavy' || activityLevel === 'very' ? 5 : 4;
+                muscleGroups = ['HIIT Intervals', 'Sprint Work', 'Tempo Runs', 'Recovery Runs'];
+                restDays = 7 - workoutsPerWeek;
+                notes = 'Focus on high-intensity intervals and sprint work. Include recovery runs between hard sessions.';
+                break;
+            case 'endurance':
+                workoutsPerWeek = activityLevel === 'heavy' ? 6 : activityLevel === 'very' ? 5 : 4;
+                muscleGroups = ['Long Runs', 'Tempo Runs', 'Easy Pace', 'Cross Training'];
+                restDays = 7 - workoutsPerWeek;
+                notes = 'Build aerobic base with longer, steady-state cardio sessions. Mix in cross-training to prevent overuse injuries.';
+                break;
+            case 'general':
+                workoutsPerWeek = activityLevel === 'very' || activityLevel === 'heavy' ? 5 : activityLevel === 'moderate' ? 4 : 3;
+                muscleGroups = ['Steady Cardio', 'HIIT', 'Active Recovery', 'Mixed Intensity'];
+                restDays = 7 - workoutsPerWeek;
+                notes = 'Variety of cardio intensities for overall fitness. Include both steady-state and interval work.';
+                break;
+            default:
+                workoutsPerWeek = 3;
+                muscleGroups = ['Cardio Session', 'Active Recovery'];
+                restDays = 4;
+                notes = 'General cardiovascular fitness.';
+        }
+    }
+
+    return {
+        workoutsPerWeek,
+        muscleGroups,
+        restDays,
+        notes,
+        exerciseType,
+        trainingType
+    };
 }
