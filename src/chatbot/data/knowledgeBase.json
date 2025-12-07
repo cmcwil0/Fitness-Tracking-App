@@ -102,6 +102,31 @@
       }
     ]
   },
+  "supplements": {
+    "title": "Supplements",
+    "content": [
+      {
+        "topic": "Supplement Disclaimer",
+        "info": "IMPORTANT: Always consult with a doctor or qualified healthcare professional before starting any supplement regimen. Supplements can interact with medications, may not be suitable for certain health conditions, and their effects vary by individual. The information provided here is for educational purposes only and is not medical advice."
+      },
+      {
+        "topic": "Common Fitness Supplements",
+        "info": "Before considering any supplements, please consult with a healthcare professional. Common fitness supplements include protein powder (whey, casein, plant-based), creatine monohydrate, caffeine, and BCAAs. However, whole foods should always be the primary source of nutrition. Supplements are meant to supplement a healthy diet, not replace it."
+      },
+      {
+        "topic": "Protein Supplements",
+        "info": "Disclaimer: Consult a healthcare provider before use. Protein powders can help meet daily protein requirements when whole food sources are insufficient. Types include whey (fast-absorbing), casein (slow-absorbing), and plant-based options (pea, rice, hemp). Most people can meet protein needs through food alone."
+      },
+      {
+        "topic": "Creatine",
+        "info": "Disclaimer: Consult a healthcare provider before use, especially if you have kidney concerns. Creatine monohydrate is one of the most researched supplements and may help with strength and power output. It's naturally found in meat and fish. Stay well-hydrated when using creatine."
+      },
+      {
+        "topic": "Pre-Workout Supplements",
+        "info": "Disclaimer: Consult a healthcare provider before use, especially if you have heart conditions, high blood pressure, or caffeine sensitivity. Pre-workout supplements typically contain caffeine and other stimulants. Natural alternatives include coffee or a banana with peanut butter."
+      }
+    ]
+  },
   "general": {
     "title": "General Fitness",
     "content": [

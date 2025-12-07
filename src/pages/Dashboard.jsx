@@ -109,16 +109,40 @@ const Dashboard = () => {
       <div className={`${classes.dashboardContainer} ${classes.card}`}>
 
         {}
-        <div className={`${classes.nutritionContainer} ${classes.card}`}>
-          <div style={{ width: '55%', margin: '0 auto' }}>
-            <CircularProgressbar
-              value={todayCalories}
-              maxValue={calorieTarget > 0 ? calorieTarget : 1}
-              text={`${todayCalories}/${calorieTarget || 0}`}
-              styles={buildStyles({textColor: '#D65108', pathColor: '#D65108'})}
-            />
-          </div>
-        </div>
+        <div className={`${classes.nutritionContainer} ${classes.card}`}
+  style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}
+>
+  <div style={{ width: '55%' }}>
+    <CircularProgressbar
+      value={todayCalories}
+      maxValue={calorieTarget > 0 ? calorieTarget : 1}
+      text={`${todayCalories}/${calorieTarget || 0}`}
+      styles={buildStyles({})}
+    />
+  </div>
+
+  {/* Goal Form Reminder */}
+  {calorieTarget === 0 && (
+    <div style={{
+      marginTop: "12px",
+      textAlign: "center",
+      fontSize: "0.95rem",
+      color: "var(--accent-color)"
+    }}>
+      Please fill out the{" "}
+      <NavLink
+        to="/GoalForm"
+        style={{
+          textDecoration: "underline",
+          color: "var(--accent-color)",
+          fontWeight: "bold"
+        }}
+      >
+        Goal Form
+      </NavLink>
+    </div>
+  )}
+</div>
 
         {}
         <div className={`${classes.workoutContainer} ${classes.card}`}>

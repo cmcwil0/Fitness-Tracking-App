@@ -1,61 +1,66 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
 import authRouter from './routes/auth.js';
 import goalsRouter from './routes/goals.js';
 import diaryRouter from './routes/diary.js';
 import nutritionRouter from './routes/nutrition.js';
 import exercisesRouter from './routes/exercises.js';
-import workoutsRouter from "./routes/workouts.js";
+import workoutsRouter from './routes/workouts.js';
+import requireAuth from './middleware/requireAuth.js';
 
 const app = express();
 
+// --- CORS SETUP 
 const allowedOrigins = [
-  'http://localhost:5173',          // local dev
-  'https://www.fittrack.live',      // production
-  'https://fittrack.live',          
-];
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  process.env.FRONTEND_ORIGIN,
+  'https://www.fittrack.live',
+  'https://fittrack.live',
+].filter(Boolean);
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin(origin, callback) {
+      // allow same-origin / curl / server-side
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.log('CORS blocked origin:', origin);
+      return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
   })
 );
+
+// --- BODY PARSING 
 app.use(express.json());
 
-function requireAuth(req, res, next) {
-  const auth = req.headers.authorization || '';
-  const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
-  if (!token) return res.status(401).json({ error: 'Unauthorized' });
-  try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET || 'devsecret');
-    req.user = {
-      id: payload.id || payload.userId,
-      username: payload.username,
-      role: payload.role
-    };
-    next();
-  } catch {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-}
+// --- ROUTES
 
-app.get('/api/health', (_req, res) => res.json({ ok: true }));
-
-// Routes
 app.use('/api/auth', authRouter);
+
 app.use('/api/goals', requireAuth, goalsRouter);
 app.use('/api/diary', requireAuth, diaryRouter);
-app.use('/api/nutrition', nutritionRouter);
+app.use('/api/nutrition', requireAuth, nutritionRouter);
 app.use('/api/exercises', requireAuth, exercisesRouter);
-app.use("/api/workouts", requireAuth, workoutsRouter);
+app.use('/api/workouts', requireAuth, workoutsRouter);
 
-app.use((err, _req, res, _next) => {
-  console.error('Unhandled error:', err);
-  res.status(500).json({ error: 'Server error' });
+// Simple health check so we can hit the API URL directly
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: 'fitness-api is running',
+    env: process.env.NODE_ENV || 'development',
+  });
 });
 
+// --- START SERVER 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`API listening on ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`API listening on port ${PORT}`);
+});
