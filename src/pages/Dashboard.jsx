@@ -117,7 +117,7 @@ const Dashboard = () => {
       value={todayCalories}
       maxValue={calorieTarget > 0 ? calorieTarget : 1}
       text={`${todayCalories}/${calorieTarget || 0}`}
-      styles={buildStyles({})}
+      styles={buildStyles({textColor: '#D65108', pathColor: '#D65108'})}
     />
   </div>
 
