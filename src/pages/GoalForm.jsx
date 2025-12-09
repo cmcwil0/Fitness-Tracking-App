@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classes from '../css/GoalForm.module.css';
 import { NutritionRecommendation, WorkoutRecommendation } from '../components/UserRecommendation';
 import { useNavigate } from 'react-router-dom';
@@ -13,11 +13,16 @@ const GoalForm = () => {
   const [age, setAge] = useState(''); // age in years
   const [activityLevel, setActivityLevel] = useState(''); //inactive, light, moderate, very, heavy
   const [exerciseType, setExerciseType] = useState(''); //lifting, cardio
-  const [trainingType, setTrainingType] = useState(''); //Cardio: general, speed, endurance | Lifting: Strength, hypertrophy
+  const [trainingType, setTrainingType] = useState(''); //Cardio: general, speed, endurance
   const [nutritionType, setNutritionType] = useState(''); //gain, gainFast, maintain, lose, loseFast
   const [editingField, setEditingField] = useState('');
   const [calorieTarget, setCalorieTarget] = useState('');
   const [workoutRec, setWorkoutRec] = useState(null);
+
+  // existing goal info
+  const [existingGoal, setExistingGoal] = useState(null);
+  const [hasExistingGoal, setHasExistingGoal] = useState(false);
+  const [loadingGoal, setLoadingGoal] = useState(true);
 
   const navigate = useNavigate();
   const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
@@ -32,11 +37,55 @@ const GoalForm = () => {
     {id:'nutritionType', label: 'Nutrition Type'},
   ];
 
+  // load existing goal when page opens
+  useEffect(() => {
+    const loadGoal = async () => {
+      if (!isLoggedIn()) {
+        setLoadingGoal(false);
+        return;
+      }
+      try {
+        const res = await fetch(`${API}/api/goals/me`, {
+          headers: { ...authHeaders() }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && (data.calorie_target || data.goal?.calorie_target)) {
+            const kcal = Number(data.calorie_target ?? data.goal?.calorie_target);
+            if (!Number.isNaN(kcal)) {
+              setExistingGoal({ calorie_target: kcal });
+              setHasExistingGoal(true);
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Error loading existing goal', e);
+      } finally {
+        setLoadingGoal(false);
+      }
+    };
+
+    loadGoal();
+  }, [API]);
+
+  // send height/weight/age/gender + calorie_target
   async function saveGoalToBackend(targetKcal) {
+    const toNumOrNull = (v) => {
+      if (v === '' || v === null || v === undefined) return null;
+      const n = Number(v);
+      return Number.isFinite(n) ? n : null;
+    };
+
     const r = await fetch(`${API}/api/goals`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', ...authHeaders() },
-      body: JSON.stringify({ calorie_target: Number(targetKcal) })
+      body: JSON.stringify({
+        calorie_target: Number(targetKcal),
+        height: toNumOrNull(height),
+        weight: toNumOrNull(weight),
+        age: toNumOrNull(age),
+        gender: gender || null
+      })
     });
     const data = await r.json();
     if (!r.ok) throw new Error(data?.message || 'Failed to save goal');
@@ -55,12 +104,24 @@ const GoalForm = () => {
 
     const workout = WorkoutRecommendation(exerciseType, trainingType, activityLevel);
 
+    // 🔹 Save values locally so Profile can read them
+    try {
+      localStorage.setItem(
+        'goalFormInfo',
+        JSON.stringify({ height, weight, age, gender })
+      );
+    } catch (err) {
+      console.error('Failed to store goal info locally', err);
+    }
+
     setCalorieTarget(target);
     setWorkoutRec(workout);
     setCurrentStep(currentStep + 1);
 
     try {
       await saveGoalToBackend(target);
+      setExistingGoal({ calorie_target: target });
+      setHasExistingGoal(true);
     } catch (e) {
       console.error(e);
     }
@@ -98,7 +159,40 @@ const GoalForm = () => {
     <div className={`${classes.goalFormContainer}`}>
       <div className={`${classes.goalForm}`}>
 
-        {currentStep === 1 && //if step 1 render
+        {}
+        {!loadingGoal && hasExistingGoal && existingGoal && (
+          <div
+            style={{
+              marginBottom: '20px',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              background: 'var(--secondary-color)',
+              textAlign: 'center',
+              fontSize: '0.9rem'
+            }}
+          >
+            <div style={{ fontWeight: 600, marginBottom: '4px' }}>
+              You already have a goal saved!
+            </div>
+            <div style={{ opacity: 0.9 }}>
+              Current daily calorie goal:{' '}
+              <span
+                style={{
+                  color: 'var(--accent-color)',
+                  fontWeight: 'bold'
+                }}
+              >
+                {existingGoal.calorie_target} kcal
+              </span>
+            </div>
+            <div style={{ marginTop: '4px', opacity: 0.8 }}>
+              Update any information below and submit again to modify your goal.
+            </div>
+          </div>
+        )}
+
+        {}
+        {currentStep === 1 && 
           <div className={classes.step1}>
             <h2>Lets get some information..</h2>
             <form className={`${classes.goalInputs}`}>
@@ -149,6 +243,7 @@ const GoalForm = () => {
           </div>
         }
 
+        {}
         {currentStep === 2 && 
           <div className={`${classes.step2}`}>
             <h2>Lets set a goal...</h2>
@@ -189,6 +284,7 @@ const GoalForm = () => {
           </div>
         }
 
+        {}
         {currentStep === 3 && 
           <div className={`${classes.step3}`}>
             <h2>Does Everything Look Correct?</h2>
@@ -214,11 +310,12 @@ const GoalForm = () => {
           </div>
         }
 
+        {/* NAV BUTTONS */}
         {currentStep !== 4 && 
           <div className={`${classes.navigationButtons}`}>
             {currentStep > 1 && <button onClick={() => validateStep('back')}>Back</button>}
             {currentStep < 3 && <button onClick={() => validateStep('next')} className={!validateForm() ? classes.buttonDisabled : ''} >Next</button>}
-            {currentStep === 3 && <button onClick={() => Submit()}>Submit</button>}
+            {currentStep === 3 && <button onClick={() => Submit()}>{hasExistingGoal ? 'Update Goals' : 'Submit'}</button>}
           </div>
         }
 

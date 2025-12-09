@@ -3,11 +3,11 @@ import classes from '../css/UserProfile.module.css';
 
 const API = import.meta.env?.VITE_API_URL || 'http://localhost:4000';
 
-const ProfileCard = ({ name, value, onChange, onToggle, onSave }) => (
+const ProfileCard = ({ name, value, onChange, onToggle, onSave, readOnly = false }) => (
   <div className={classes.profileCard}>
     <label>{name}</label>
     <section>
-      {value.isEditing ? (
+      {value.isEditing && !readOnly ? (
         <input
           value={value.text ?? ''}
           onChange={(e) => onChange(name, e.target.value)}
@@ -17,21 +17,23 @@ const ProfileCard = ({ name, value, onChange, onToggle, onSave }) => (
       )}
     </section>
 
-    <span
-      className={classes.editButton}
-      onClick={() => (value.isEditing ? onSave(name) : onToggle(name, true))}
-      title={value.isEditing ? 'Save' : 'Edit'}
-    >
-      {value.isEditing ? (
-        <svg xmlns="http://www.w3.org/2000/svg" height="12px" width="12px" fill="var(--accent-color)" viewBox="0 0 512 512">
-          <path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
-        </svg>
-      ) : (
-        <svg xmlns="http://www.w3.org/2000/svg" height="12px" width="12px" fill="var(--accent-color)" viewBox="0 0 512 512">
-          <path d="M352.9 21.2L308 66.1 445.9 204 490.8 159.1C504.4 145.6 512 127.2 512 108s-7.6-37.6-21.2-51.1L455.1 21.2C441.6 7.6 423.2 0 404 0s-37.6 7.6-51.1 21.2zM274.1 100L58.9 315.1c-10.7 10.7-18.5 24.1-22.6 38.7L.9 481.6c-2.3 8.3 0 17.3 6.2 23.4s15.1 8.5 23.4 6.2l127.8-35.5c14.6-4.1 27.9-11.8 38.7-22.6L412 237.9 274.1 100z"/>
-        </svg>
-      )}
-    </span>
+    {!readOnly && (
+      <span
+        className={classes.editButton}
+        onClick={() => (value.isEditing ? onSave(name) : onToggle(name, true))}
+        title={value.isEditing ? 'Save' : 'Edit'}
+      >
+        {value.isEditing ? (
+          <svg xmlns="http://www.w3.org/2000/svg" height="12px" width="12px" fill="var(--accent-color)" viewBox="0 0 512 512">
+            <path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+          </svg>
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" height="12px" width="12px" fill="var(--accent-color)" viewBox="0 0 512 512">
+            <path d="M352.9 21.2L308 66.1 445.9 204 490.8 159.1C504.4 145.6 512 127.2 512 108s-7.6-37.6-21.2-51.1L455.1 21.2C441.6 7.6 423.2 0 404 0s-37.6 7.6-51.1 21.2zM274.1 100L58.9 315.1c-10.7 10.7-18.5 24.1-22.6 38.7L.9 481.6c-2.3 8.3 0 17.3 6.2 23.4s15.1 8.5 23.4 6.2l127.8-35.5c14.6-4.1 27.9-11.8 38.7-22.6L412 237.9 274.1 100z"/>
+          </svg>
+        )}
+      </span>
+    )}
   </div>
 );
 
@@ -59,6 +61,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     const load = async () => {
+      // 1) Load basic user info from localStorage
       try {
         const cached = localStorage.getItem('user');
         if (cached) {
@@ -71,6 +74,23 @@ const UserProfile = () => {
         }
       } catch { /* ignore */ }
 
+      // 2) Load goal-related info from localStorage (GoalForm)
+      try {
+        const storedInfo = localStorage.getItem('goalFormInfo');
+        if (storedInfo) {
+          const info = JSON.parse(storedInfo);
+          const pick = (v) => (v === undefined || v === null ? '' : String(v));
+          setFields(prev => ({
+            ...prev,
+            height: { ...prev.height, text: pick(info.height) },
+            weight: { ...prev.weight, text: pick(info.weight) },
+            age:    { ...prev.age,    text: pick(info.age) },
+            gender: { ...prev.gender, text: pick(info.gender) },
+          }));
+        }
+      } catch { /* ignore */ }
+
+      // 3) Load latest user info from API
       try {
         const me = await fetch(`${API}/api/auth/me`, { headers: tokenHeaders() });
         if (me.ok) {
@@ -87,18 +107,25 @@ const UserProfile = () => {
         }
       } catch {}
 
+      // 4) Try to enhance info from /api/goals/me if server has anything
       try {
         const goals = await fetch(`${API}/api/goals/me`, { headers: tokenHeaders() });
         if (goals.ok) {
           const g = await goals.json();
-          const pick = (v) => (v === undefined || v === null ? '' : String(v));
-          setFields(prev => ({
-            ...prev,
-            height: { ...prev.height, text: pick(g?.height) },
-            weight: { ...prev.weight, text: pick(g?.weight) },
-            age:    { ...prev.age,    text: pick(g?.age) },
-            gender: { ...prev.gender, text: pick(g?.gender) },
-          }));
+          const src = g.goal ?? g; // support both shapes
+          setFields(prev => {
+            const keepOr = (prevField, value) => {
+              if (value === undefined || value === null || value === '') return prevField.text;
+              return String(value);
+            };
+            return {
+              ...prev,
+              height: { ...prev.height, text: keepOr(prev.height, src?.height) },
+              weight: { ...prev.weight, text: keepOr(prev.weight, src?.weight) },
+              age:    { ...prev.age,    text: keepOr(prev.age,    src?.age) },
+              gender: { ...prev.gender, text: keepOr(prev.gender, src?.gender) },
+            };
+          });
         }
       } catch {}
     };
@@ -212,42 +239,52 @@ const UserProfile = () => {
                 onToggle={toggleEdit}
                 onSave={handleSave}
               />
-
             </>
           )}
 
           {currentSection === 'info' && (
-            <>
-              <ProfileCard
-                name="height"
-                value={fields.height}
-                onChange={handleChange}
-                onToggle={toggleEdit}
-                onSave={handleSave}
-              />
-              <ProfileCard
-                name="weight"
-                value={fields.weight}
-                onChange={handleChange}
-                onToggle={toggleEdit}
-                onSave={handleSave}
-              />
-              <ProfileCard
-                name="age"
-                value={fields.age}
-                onChange={handleChange}
-                onToggle={toggleEdit}
-                onSave={handleSave}
-              />
-              <ProfileCard
-                name="gender"
-                value={fields.gender}
-                onChange={handleChange}
-                onToggle={toggleEdit}
-                onSave={handleSave}
-              />
-            </>
-          )}
+          <>
+            <ProfileCard
+              name="height"
+              value={{
+                ...fields.height,
+                text: fields.height.text ? `${fields.height.text} cm` : ''
+              }}
+              onChange={handleChange}
+              onToggle={toggleEdit}
+              onSave={handleSave}
+              readOnly
+            />
+            <ProfileCard
+              name="weight"
+              value={{
+              ...fields.weight,
+              text: fields.weight.text ? `${fields.weight.text} lbs` : ''
+              }}
+              onChange={handleChange}
+              onToggle={toggleEdit}
+              onSave={handleSave}
+              readOnly
+            />
+            <ProfileCard
+              name="age"
+              value={fields.age}
+              onChange={handleChange}
+              onToggle={toggleEdit}
+              onSave={handleSave}
+              readOnly
+            />
+            <ProfileCard
+              name="gender"
+              value={fields.gender}
+              onChange={handleChange}
+              onToggle={toggleEdit}
+              onSave={handleSave}
+              readOnly
+            />
+          </>
+        )}
+
 
           {currentSection === 'other' && (
             <div className={classes.otherContainer}>

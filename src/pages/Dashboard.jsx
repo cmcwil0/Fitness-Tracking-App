@@ -129,7 +129,7 @@ const Dashboard = () => {
       fontSize: "0.95rem",
       color: "var(--accent-color)"
     }}>
-      Please fill out the{" "}
+      Get your Daily Calorie Intake by filling out the {" "} 
       <NavLink
         to="/GoalForm"
         style={{
