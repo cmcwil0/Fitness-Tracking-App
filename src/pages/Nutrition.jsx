@@ -53,6 +53,7 @@ export const NutritionCard = () => {
 const Nutrition = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [calorieTarget, setCalorieTarget] = useState(2800);
+  const [showFoodLog, setShowFoodLog] = useState(false);
 
   const [diary, setDiary] = useState([]);
   const todayStr = useMemo(
@@ -180,13 +181,28 @@ const Nutrition = () => {
           <>
             <div className={classes.dateLabel}>{getCurrentDate()}</div>
 
-            <div className={classes.progressBar}>
+            <div className={classes.progressBar} style={{ position: 'relative' }}>
               <CircularProgressbar
                 value={calorieCount}
                 maxValue={calorieTarget}
-                text={`${calorieCount}/${calorieTarget}`}
-                styles={buildStyles({textColor: '#D65108', pathColor: '#D65108'})}
+                text={``}
+                styles={buildStyles({pathColor: '#D65108'})}
               />
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                textAlign: 'center'
+              }}>
+                <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#D65108', position: 'relative' }}>
+                  {calorieCount}
+                  <span style={{ fontSize: '0.9rem', opacity: 0.8, position: 'absolute', marginLeft: '4px' }}>kcal</span>
+                </div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.7, marginTop: '4px' }}>
+                  {Math.max(0, calorieTarget - calorieCount)} remaining
+                </div>
+              </div>
             </div>
 
             <div className={classes.cpfContainer}>
@@ -214,82 +230,114 @@ const Nutrition = () => {
           onDelete={handleSearchDelete}
         />
 
-        <div
-          style={{
-            marginTop: 8,
-            maxHeight: 180,
-            overflowY: 'auto',
-          }}
-        >
-          <ul className={classes.foodsList}>
-            {diary.map((it) => (
-              <li key={`${it.name}-${it.id || it.entry_date}`}>
-                <div className={classes.mainInfo}>
-                  <span className={classes.itemName}>{it.name}</span>
-                  <span className={classes.itemBrand}>API Ninjas</span>
-                </div>
-
-                <div className={classes.subInfo}>
-                  <span className={classes.itemCalories}>
-                    {rnd(it.calories)}
-                    <span>kcal</span>
-                  </span>
-
-                  <span
-                    style={{
-                      fontSize: 12,
-                      opacity: 0.85,
-                      marginRight: 8,
-                    }}
-                  >
-                    {rnd(it.carbs)}g C · {rnd(it.protein)}g P ·{' '}
-                    {rnd(it.fat)}g F
-                  </span>
-
-                  <QtyBadge q={it.quantity} />
-
-                  {}
-                  <button
-                    className={classes.infoButton}
-                    type="button"
-                    style={diaryButtonStyle}
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => changeQty(it, -1)}
-                    title="Remove one"
-                  >
-                    −
-                  </button>
-
-                  {}
-                  <button
-                    className={classes.addFoodButton}
-                    type="button"
-                    style={diaryButtonStyle}
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => changeQty(it, +1)}
-                    title="Add one"
-                  >
-                    +
-                  </button>
-
-                  {}
-                  <button
-                    className={classes.infoButton}
-                    type="button"
-                    style={diaryButtonStyle}
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => deleteItem(it.name)}
-                    title="Delete"
-                  >
-                    🗑
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         {isSearchFocused === false && (
+          <>
+            <button
+              onClick={() => setShowFoodLog(!showFoodLog)}
+              style={{
+                marginTop: '4px',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: '2px solid var(--accent-color)',
+                background: 'var(--secondary-color)',
+                color: 'var(--accent-color)',
+                cursor: 'pointer',
+                fontSize: '0.9rem',
+                transition: 'all 0.15s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = 'var(--accent-color)';
+                e.target.style.color = 'var(--background-color)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'var(--secondary-color)';
+                e.target.style.color = 'var(--accent-color)';
+              }}
+            >
+              {showFoodLog ? 'Hide Food Log' : 'Show Food Log'}
+            </button>
+
+            {showFoodLog && (
+              <div
+                style={{
+                  marginTop: 8,
+                  maxHeight: 180,
+                  overflowY: 'auto',
+                  width: '100%',
+                }}
+              >
+                <ul className={classes.foodsList}>
+                  {diary.map((it) => (
+                    <li key={`${it.name}-${it.id || it.entry_date}`}>
+                      <div className={classes.mainInfo}>
+                        <span className={classes.itemName}>{it.name}</span>
+                        <span className={classes.itemBrand}>API Ninjas</span>
+                      </div>
+
+                      <div className={classes.subInfo}>
+                        <span className={classes.itemCalories}>
+                          {rnd(it.calories)}
+                          <span>kcal</span>
+                        </span>
+
+                        <span
+                          style={{
+                            fontSize: 12,
+                            opacity: 0.85,
+                            marginRight: 8,
+                          }}
+                        >
+                          {rnd(it.carbs)}g C · {rnd(it.protein)}g P ·{' '}
+                          {rnd(it.fat)}g F
+                        </span>
+
+                        <QtyBadge q={it.quantity} />
+
+                        {}
+                        <button
+                          className={classes.infoButton}
+                          type="button"
+                          style={diaryButtonStyle}
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => changeQty(it, -1)}
+                          title="Remove one"
+                        >
+                          −
+                        </button>
+
+                        {}
+                        <button
+                          className={classes.addFoodButton}
+                          type="button"
+                          style={diaryButtonStyle}
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => changeQty(it, +1)}
+                          title="Add one"
+                        >
+                          +
+                        </button>
+
+                        {}
+                        <button
+                          className={classes.infoButton}
+                          type="button"
+                          style={diaryButtonStyle}
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => deleteItem(it.name)}
+                          title="Delete"
+                        >
+                          🗑
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </>
+        )}
+
+        {isSearchFocused === false && !showFoodLog && (
           <div className={classes.bottomContent}>
             <BarChart
               width={500}

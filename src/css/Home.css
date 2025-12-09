@@ -1,24 +1,117 @@
 .home-page {
-    padding: 30px;
+    padding: 0;
+    padding-top: 90px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Slideshow */
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.slide-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.slide-subtitle {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.slide-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background-color: var(--accent-color);
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Content Section */
+.content-section {
+    padding: 60px 30px;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(100vh - 100px);
 }
 
 .home-page .main-heading {
-    font-size: 2.5rem;
+    font-size: 1.7rem;
 }
 
 .home-page .start-button{
-    width: 250px;
-    height: 80px;
+    width: 200px;
+    height: 60px;
     border: 2px solid;
     border-radius: 40px;
     background-color: transparent;
     font-weight: bold;
-    font-size: 1.24rem;
+    font-size: 1.1rem;
     transition: all 0.15s ease;
     cursor: pointer;
 }

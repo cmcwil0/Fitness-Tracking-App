@@ -25,7 +25,7 @@ const Dashboard = () => {
   const [username, setUsername] = useState('Name')
   const [streak, setStreak] = useState('num')
 
-  const [calorieTarget, setCalorieTarget] = useState(0)
+  const [calorieTarget, setCalorieTarget] = useState(2800)
   const [todayCalories, setTodayCalories] = useState(0)
 
   useEffect(() => {
@@ -112,13 +112,28 @@ const Dashboard = () => {
         <div className={`${classes.nutritionContainer} ${classes.card}`}
   style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}
 >
-  <div style={{ width: '55%' }}>
+  <div style={{ width: '55%', position: 'relative' }}>
     <CircularProgressbar
       value={todayCalories}
       maxValue={calorieTarget > 0 ? calorieTarget : 1}
-      text={`${todayCalories}/${calorieTarget || 0}`}
-      styles={buildStyles({textColor: '#D65108', pathColor: '#D65108'})}
+      text={``}
+      styles={buildStyles({pathColor: '#D65108'})}
     />
+    <div style={{
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      textAlign: 'center'
+    }}>
+      <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#D65108', position: 'relative' }}>
+        {todayCalories}
+        <span style={{ fontSize: '0.9rem', opacity: 0.8, position: 'absolute', marginLeft: '4px' }}>kcal</span>
+      </div>
+      <div style={{ fontSize: '0.85rem', opacity: 0.7, marginTop: '4px' }}>
+        {calorieTarget > 0 ? `${Math.max(0, calorieTarget - todayCalories)} remaining` : '0 remaining'}
+      </div>
+    </div>
   </div>
 
   {/* Goal Form Reminder */}

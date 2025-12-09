@@ -154,7 +154,7 @@
 /* workout card */
 .workoutCard {
     width: 100%;
-    height: 170px;
+    height: 100px;
     background: var(--secondary-color);
     padding: 20px;
     border-radius: 10px;
@@ -183,7 +183,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 50px;
     flex-grow: 1;
 }
 
