@@ -44,49 +44,48 @@ const FitnessCalendar = () => {
         const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
         const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         
-        // Sample workout data - in a real app this would come from your backend
         const milestoneData = {
             0: { // Sunday
-                streak: 5,
-                calories: 2150,
-                exercises: 8,
+                streak: 0,
+                calories: 0,
+                exercises: 0,
                 restDay: true
             },
             1: { // Monday
-                streak: 6,
-                calories: 2890,
-                exercises: 12,
-                workoutPreset: 'Chest & Triceps'
+                streak: 0,
+                calories: 0,
+                exercises: 0,
+                restDay: true
             },
             2: { // Tuesday
-                streak: 7,
-                calories: 3200,
-                exercises: 10,
-                workoutPreset: 'Cardio & Core'
+                streak: 0,
+                calories: 0,
+                exercises: 0,
+                restDay: true
             },
             3: { // Wednesday
-                streak: 8,
-                calories: 2750,
-                exercises: 11,
-                workoutPreset: 'Back & Biceps'
+                streak: 0,
+                calories: 0,
+                exercises: 0,
+                restDay: true
             },
             4: { // Thursday
-                streak: 9,
-                calories: 3100,
-                exercises: 13,
-                workoutPreset: 'Legs & Glutes'
+                streak: 0,
+                calories: 0,
+                exercises: 0,
+                restDay: true
             },
             5: { // Friday
-                streak: 10,
-                calories: 2950,
-                exercises: 9,
-                workoutPreset: 'Shoulders & Arms'
+                streak: 0,
+                calories: 0,
+                exercises: 0,
+                restDay: true
             },
             6: { // Saturday
-                streak: 11,
-                calories: 3400,
-                exercises: 15,
-                workoutPreset: 'Full Body HIIT'
+                streak: 0,
+                calories: 0,
+                exercises: 0,
+                restDay: true
             }
         };
 
