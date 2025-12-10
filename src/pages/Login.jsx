@@ -1,5 +1,5 @@
 import '../css/Login.css'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const API_URL = import.meta.env?.VITE_API_URL || 'http://localhost:4000'
@@ -8,6 +8,11 @@ const Login = () => {
   const usernameInputRef = useRef()
   const passwordInputRef = useRef()
   const navigate = useNavigate()
+  const [showForgot, setShowForgot] = useState(false)
+  const [forgotEmail, setForgotEmail] = useState('')
+  const [forgotMessage, setForgotMessage] = useState('')
+  const [forgotError, setForgotError] = useState('')
+  const [forgotLoading, setForgotLoading] = useState(false)
 
   const request = async (path, body) => {
     const res = await fetch(`${API_URL}/api/auth/${path}`, {
@@ -26,7 +31,6 @@ const Login = () => {
     if (!username || !password) return alert('Enter username and password.')
 
     try {
-      // send as `identifier` so it works with username OR email
       const { token, user } = await request('login', { identifier: username, password })
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
@@ -36,18 +40,115 @@ const Login = () => {
     }
   }
 
-  // just redirect to the real Sign Up page
   const handleSignUp = () => {
     navigate('/signup')
+  }
+
+  const handleForgotUsername = async () => {
+    setForgotMessage('')
+    setForgotError('')
+
+    const email = forgotEmail.trim()
+    if (!email) {
+      setForgotError('Please enter the email you used when signing up.')
+      return
+    }
+
+    try {
+      setForgotLoading(true)
+      const data = await request('forgot-username', { email })
+      setForgotMessage(`Your username is: ${data.username}`)
+    } catch (err) {
+      setForgotError(err.message)
+    } finally {
+      setForgotLoading(false)
+    }
+  }
+
+  const returnToLogin = () => {
+    setShowForgot(false)
+    setForgotEmail('')
+    setForgotMessage('')
+    setForgotError('')
   }
 
   return (
     <div className='login-page'>
       <div className='login-container'>
-        <input className='username-input' ref={usernameInputRef} type="text" placeholder='Username...' />
-        <input className='password-input' ref={passwordInputRef} type="password" placeholder='Password...' />
-        <button className='login-button' onClick={handleLogin}>Login</button>
-        <button className='signup-button' onClick={handleSignUp}>Sign Up</button>
+
+        {!showForgot ? (
+          <>
+            {}
+            <input
+              className='username-input'
+              ref={usernameInputRef}
+              type="text"
+              placeholder='Username...'
+            />
+            <input
+              className='password-input'
+              ref={passwordInputRef}
+              type="password"
+              placeholder='Password...'
+            />
+            <button className='login-button' onClick={handleLogin}>Login</button>
+            <button className='signup-button' onClick={handleSignUp}>Sign Up</button>
+
+            {}
+            <button
+              type="button"
+              onClick={() => setShowForgot(true)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                padding: 0,
+                marginTop: '10px',
+                color: 'inherit',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                fontSize: '0.9rem',
+              }}
+            >
+              Forgot username?
+            </button>
+          </>
+        ) : (
+          <>
+            {}
+            <input
+              className='username-input'
+              type="email"
+              placeholder='Email you used to sign up...'
+              value={forgotEmail}
+              onChange={(e) => setForgotEmail(e.target.value)}
+            />
+            <button
+              className='login-button'
+              style={{ marginTop: '8px' }}
+              onClick={handleForgotUsername}
+              disabled={forgotLoading}
+            >
+              {forgotLoading ? 'Checking...' : 'Find Username'}
+            </button>
+
+            {forgotMessage && (
+              <p style={{ marginTop: '8px' }}>{forgotMessage}</p>
+            )}
+            {forgotError && (
+              <p style={{ marginTop: '8px', color: '#ff6b6b' }}>{forgotError}</p>
+            )}
+
+            <button
+              type="button"
+              className='signup-button'
+              style={{ marginTop: '12px' }}
+              onClick={returnToLogin}
+            >
+              Return to Login
+            </button>
+          </>
+        )}
+
       </div>
     </div>
   )

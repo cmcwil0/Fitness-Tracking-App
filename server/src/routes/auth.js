@@ -72,4 +72,31 @@ router.post('/login', async (req, res) => {
   }
 });
 
+/** 🔹 Forgot username: look up username by email */
+router.post('/forgot-username', async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required.' });
+  }
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT username FROM users WHERE email = ?',
+      [email]
+    );
+
+    if (!rows.length) {
+      return res
+        .status(404)
+        .json({ message: 'No account found with that email.' });
+    }
+
+    return res.json({ username: rows[0].username });
+  } catch (err) {
+    console.error('forgot-username error:', err);
+    return res.status(500).json({ message: 'Server error. Please try again.' });
+  }
+});
+
 export default router;
