@@ -387,6 +387,7 @@ const Fitness = () => {
                                   cursor: 'pointer',
                                   fontSize: '0.8rem',
                                   textDecoration: 'underline',
+                                  overflow: 'none',
                                 }}
                               >
                                 View details
