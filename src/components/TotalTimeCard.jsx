@@ -12,7 +12,7 @@ const TotalTimeCard = () => {
     }
     return `${mins}m`
   }
-
+  
   return (
     <div className={classes.totalTimeContainer}>
       <div className={classes.header}>
@@ -21,7 +21,7 @@ const TotalTimeCard = () => {
       </div>
 
       <div className={classes.mainStat}>
-        <div className={classes.timeValue}>{formatTime(timeToday)}</div>
+        <div className={classes.timeValue}>{formatTime(timeTodayValue)}</div>
         <div className={classes.timeLabel}>Today</div>
       </div>
 
