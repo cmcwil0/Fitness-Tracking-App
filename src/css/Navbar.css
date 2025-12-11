@@ -7,6 +7,7 @@
   width: 98%;   
   position: fixed;
   margin: 10px;
+  z-index: 9999;
 }
 
 .navbar-inner {
