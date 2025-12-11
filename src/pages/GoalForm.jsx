@@ -360,6 +360,13 @@ const GoalForm = () => {
                 </div>
               )}
             </div>
+
+            {/* 🔹 New: Continue to Dashboard button */}
+            <div className={classes.navigationButtons}>
+              <button onClick={() => navigate('/dashboard')}>
+                Continue to Dashboard
+              </button>
+            </div>
           </div>
         }
 

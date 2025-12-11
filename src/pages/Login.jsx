@@ -25,6 +25,29 @@ const Login = () => {
     return data
   }
 
+  // 🔹 Check if the logged-in user already has a saved goal
+  const userHasGoal = async (token) => {
+    try {
+      const res = await fetch(`${API_URL}/api/goals/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      if (!res.ok) {
+        // 404 or any non-OK = treat as no goal
+        return false
+      }
+
+      const data = await res.json()
+      const goal = data.goal || data
+      return !!(goal && goal.calorie_target != null)
+    } catch (err) {
+      console.error('Error checking goals:', err)
+      return false
+    }
+  }
+
   const handleLogin = async () => {
     const username = usernameInputRef.current.value.trim()
     const password = passwordInputRef.current.value
@@ -34,7 +57,14 @@ const Login = () => {
       const { token, user } = await request('login', { identifier: username, password })
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
-      navigate('/dashboard')
+
+      // 🔹 Decide where to send the user based on whether they have a goal
+      const hasGoal = await userHasGoal(token)
+      if (hasGoal) {
+        navigate('/dashboard')
+      } else {
+        navigate('/goalform')
+      }
     } catch (err) {
       alert(err.message)
     }
