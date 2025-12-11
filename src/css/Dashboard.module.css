@@ -10,13 +10,15 @@
 }
 
 .dashboardContainer {
-    height: 800px;
-    width: 1400px;
+    height: 90vh; /* Adjusted to be relative to viewport height */
+    width: 90vw; /* Adjusted to be relative to viewport width */
+    max-width: 1400px; /* Optional: Set a max width for large screens */
+    max-height: 800px; /* Optional: Set a max height for large screens */
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 .dashboardContainer .card {
